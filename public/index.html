@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Labeling Tool</title>
+    <link rel="stylesheet" href="../src/styles/style.css" />
+    <link rel="stylesheet" href="../src/styles/VideoPlayer.css" />
+    <link rel="stylesheet" href="../src/styles/Labels.css" />
+  </head>
+  <body>
+    <div id="video-container">
+      <div id="video-overlay">
+        <div id="current-label" draggable="true"></div>
+      </div>
+      <video id="video" src="../assets/videos/Fishing.mp4"></video>
+      <div id="controls">
+        <button id="play" title="Play">&#x25b6;</button>
+        <div id="time">00:00/00:00</div>
+        <div id="duration">
+          <div id="currentTime"></div>
+        </div>
+        <button id="fullscreen">&#9974;</button>
+      </div>
+    </div>
+    <script src="../src/scripts/VPFunctions.js" type="module"></script>
+    <script src="../src/scripts/VideoPlayer.js" type="module"></script>
+    <script src="../src/scripts/LabelFunctions.js" type="module"></script>
+    <script src="../src/scripts/Labels.js" type="module"></script>
+  </body>
+</html>

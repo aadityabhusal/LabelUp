@@ -1,0 +1,67 @@
+#video-container {
+  position: relative;
+  width: 850px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#video-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 30px);
+  background: #000;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+#video-container:hover #video-overlay {
+  display: block;
+}
+
+/* Controls */
+
+#controls {
+  display: flex;
+  height: 26px;
+  padding: 2px;
+  background: rgb(0, 0, 0, 0.8);
+  align-items: center;
+}
+
+#play {
+  flex: 0 0 30px;
+  height: inherit;
+  margin-right: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#time {
+  color: #fff;
+  margin-right: 10px;
+}
+
+#duration {
+  height: inherit;
+  flex: 1;
+  background: rgb(189, 195, 199);
+}
+
+#currentTime {
+  height: inherit;
+  background: rgb(192, 57, 43);
+  width: 0px;
+}
+
+#fullscreen {
+  height: inherit;
+  font-size: 24px;
+  line-height: 1;
+  padding: 0 5px;
+  margin-left: 10px;
+  cursor: pointer;
+}
