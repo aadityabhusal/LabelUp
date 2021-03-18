@@ -5,6 +5,30 @@ export class Label {
     this.label = null;
     this.labelX = 0;
     this.labelY = 0;
+    this.id = this.overlay.children.length;
+    this.data = { title: "", description: "" };
+    this.color = this.generateRandomColor();
+    this.create(this.color);
+  }
+
+  get labelElement() {
+    return this.label;
+  }
+
+  get labelInfo() {
+    return {
+      id: this.id,
+      data: this.data,
+      color: this.color,
+      x: this.labelX,
+      y: this.labelY,
+      w: this.label.clientWidth,
+      h: this.label.clientHeight,
+    };
+  }
+
+  set labelInfo(data) {
+    this.data = data;
   }
 
   listeners = () => {
@@ -24,12 +48,11 @@ export class Label {
     });
   };
 
-  create = () => {
+  create = (color) => {
     this.label = document.createElement("div");
-    this.label.id = "label" + this.overlay.children.length;
+    this.label.id = "label" + this.id;
     this.label.classList.add("label");
     this.label.draggable = true;
-    let color = this.generateRandomColor();
     this.label.style.background = `rgb(${color.r}, ${color.g},${color.b})`;
     this.overlay.appendChild(this.label);
     this.listeners();

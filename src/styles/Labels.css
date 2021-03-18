@@ -5,4 +5,47 @@
   resize: both;
   overflow: auto;
   cursor: move;
+  opacity: 0.5;
+}
+
+#labels-container {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  border: 1px solid #bdc3c7;
+}
+
+#label-list-title {
+  margin: 0;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #bdc3c7;
+  text-align: center;
+}
+
+#label-list {
+  width: 250px;
+  height: 430px;
+  padding-right: 5px;
+  overflow-y: auto;
+}
+
+.labelItem {
+  border: 1px solid #bdc3c7;
+  padding: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  position: relative;
+}
+
+#closeIcon {
+  position: absolute;
+  right: 8px;
+  top: 4px;
+}
+
+#add-label-btn {
+  cursor: pointer;
+  outline: 0;
+  padding: 5px 0;
 }
