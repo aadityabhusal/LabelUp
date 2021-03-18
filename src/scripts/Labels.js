@@ -7,6 +7,7 @@ let currentLabelBox = null;
 
 addLabelBtn.addEventListener("click", (e) => {
   let label = new Label();
+  console.log(label.labelElement.style);
   labels.push(label.labelInfo);
   addNewLabel(label.labelInfo);
 });
@@ -43,7 +44,7 @@ const selectLabel = (label) => {
 const highlightLabel = (state) => {
   let boxShadow = state ? "0px 0px 10px 5px #fff" : "none";
   let border = state ? "1px solid #222" : "none";
-  let zIndex = state ? "2" : "auto";
+  let zIndex = state ? "2" : "";
 
   currentLabelBox.style.boxShadow = boxShadow;
   currentLabelBox.style.border = border;
