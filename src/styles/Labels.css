@@ -1,8 +1,7 @@
-#current-label {
+.label {
   position: absolute;
   width: 100px;
   height: 100px;
-  background: #eee;
   resize: both;
   overflow: auto;
   cursor: move;

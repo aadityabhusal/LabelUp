@@ -32,10 +32,10 @@ video.addEventListener("timeupdate", (event) => {
   }
 });
 
-// videoOverlay.addEventListener("contextmenu", (e) => {
-//   e.preventDefault();
-//   return false;
-// });
+videoOverlay.addEventListener("contextmenu", (e) => {
+  e.preventDefault();
+  return false;
+});
 
 durationDiv.addEventListener("click", (e) => {
   let ddX = e.pageX - (videoContainer.offsetLeft + durationDiv.offsetLeft);
