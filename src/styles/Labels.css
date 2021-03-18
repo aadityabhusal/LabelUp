@@ -30,18 +30,25 @@
   overflow-y: auto;
 }
 
-.labelItem {
-  border: 1px solid #bdc3c7;
-  padding: 5px;
-  margin-bottom: 5px;
-  cursor: pointer;
+.label-box {
+  display: flex;
+  flex-direction: column;
   position: relative;
 }
 
-#closeIcon {
+.labelInput {
+  border: 1px solid #bdc3c7;
+  padding: 5px;
+  margin-bottom: 5px;
+  position: relative;
+  outline: 0;
+}
+
+.closeIcon {
   position: absolute;
   right: 8px;
   top: 4px;
+  cursor: pointer;
 }
 
 #add-label-btn {
