@@ -1,7 +1,7 @@
 import { Label } from "./Label.js";
 const addLabelBtn = document.getElementById("add-label-btn");
 const exportDataBtn = document.getElementById("export-data-btn");
-
+const video = document.getElementById("video");
 export let labels = [];
 
 addLabelBtn.addEventListener("click", (e) => {
@@ -14,5 +14,11 @@ const deleteLabels = (id) => {
 };
 
 exportDataBtn.addEventListener("click", () => {
-  console.log(labels.map((item) => item.labelInfo));
+  let labelsData = JSON.stringify(labels.map((item) => item.labelInfo));
+  let dataUri =
+    "data:application/json;charset=utf-8," + encodeURIComponent(labelsData);
+  let fileName = video.currentSrc.split("/").pop().split(".").shift();
+  exportDataBtn.setAttribute("href", dataUri);
+  exportDataBtn.setAttribute("download", `..\\exports\\${fileName}.json`);
+  console.log(labelsData);
 });

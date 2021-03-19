@@ -68,12 +68,15 @@
   transition: 0.2s ease all;
 }
 
+#export-data-btn {
+  text-align: center;
+  text-decoration: none;
+  background: #2980b9;
+  font-size: 14px;
+}
+
 #add-label-btn:hover,
 #export-data-btn:hover {
   box-shadow: 0px 2px 6px 2px #95a5a6;
   font-size: 15px;
-}
-
-#export-data-btn {
-  background: #2980b9;
 }
