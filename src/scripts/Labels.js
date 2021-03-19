@@ -19,6 +19,6 @@ exportDataBtn.addEventListener("click", () => {
     "data:application/json;charset=utf-8," + encodeURIComponent(labelsData);
   let fileName = video.currentSrc.split("/").pop().split(".").shift();
   exportDataBtn.setAttribute("href", dataUri);
-  exportDataBtn.setAttribute("download", `..\\exports\\${fileName}.json`);
+  exportDataBtn.setAttribute("download", `${fileName}.json`);
   console.log(labelsData);
 });

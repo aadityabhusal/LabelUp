@@ -66,6 +66,7 @@
   color: #fff;
   border: none;
   transition: 0.2s ease all;
+  border-radius: 4px;
 }
 
 #export-data-btn {
