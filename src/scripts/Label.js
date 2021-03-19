@@ -48,7 +48,7 @@ export class Label {
     this.time = time;
   }
 
-  listeners = () => {
+  labelListeners = () => {
     this.label.addEventListener("dragstart", (e) => {
       this.labelX = e.pageX;
       this.labelY = e.pageY;
@@ -69,6 +69,10 @@ export class Label {
       let h = this.label.clientHeight;
       this.dimension = { w, h };
     });
+
+    this.label.addEventListener("click", () => {
+      this.labelInput.focus();
+    });
   };
 
   createLabel = (color) => {
@@ -76,9 +80,9 @@ export class Label {
     this.label.id = "label" + this.id;
     this.label.classList.add("label");
     this.label.draggable = true;
-    this.label.style.background = `rgb(${color.r}, ${color.g},${color.b})`;
+    this.label.style.border = `3px solid rgb(${color.r}, ${color.g},${color.b})`;
     this.overlay.appendChild(this.label);
-    this.listeners();
+    this.labelListeners();
     this.createLabelInput();
   };
 
@@ -122,7 +126,7 @@ export class Label {
     this.labelInput = document.createElement("input");
     this.labelInput.classList.add("labelInput");
     this.labelInput.placeholder = "Enter label text";
-    this.labelInput.style.border = `2px solid rgb(${this.color.r}, ${this.color.g},${this.color.b})`;
+    this.labelInput.style.border = `3px solid rgb(${this.color.r}, ${this.color.g},${this.color.b})`;
 
     this.removeLabel = document.createElement("div");
     this.removeLabel.classList.add("closeIcon");
@@ -149,11 +153,11 @@ export class Label {
 
   highlightLabel = (state) => {
     let boxShadow = state ? "0px 0px 10px 5px #fff" : "none";
-    let border = state ? "1px solid #222" : "none";
+    // let border = state ? "1px solid #222" : "none";
     let zIndex = state ? "2" : "";
 
     this.label.style.boxShadow = boxShadow;
-    this.label.style.border = border;
+    // this.label.style.border = border;
     this.label.style.zIndex = zIndex;
   };
 

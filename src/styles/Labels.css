@@ -5,7 +5,7 @@
   resize: both;
   overflow: auto;
   cursor: move;
-  opacity: 0.5;
+  background: transparent;
 }
 
 .label:hover {
