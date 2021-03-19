@@ -29,7 +29,8 @@
 
 #label-list {
   width: 250px;
-  height: 430px;
+  flex: 1;
+  max-height: 350px;
   padding-right: 5px;
   overflow-y: auto;
 }
@@ -59,6 +60,20 @@
 #export-data-btn {
   cursor: pointer;
   outline: 0;
-  padding: 5px 0;
+  padding: 10px 0;
   margin-top: 10px;
+  background: #27ae60;
+  color: #fff;
+  border: none;
+  transition: 0.2s ease all;
+}
+
+#add-label-btn:hover,
+#export-data-btn:hover {
+  box-shadow: 0px 2px 6px 2px #95a5a6;
+  font-size: 15px;
+}
+
+#export-data-btn {
+  background: #2980b9;
 }
