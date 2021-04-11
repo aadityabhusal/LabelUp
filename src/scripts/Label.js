@@ -1,6 +1,7 @@
 export class Label {
   constructor(deleteLabels) {
-    this.video = document.getElementById("video-container");
+    this.video = document.getElementById("video");
+    this.videoContainer = document.getElementById("video-container");
     this.overlay = document.getElementById("video-overlay");
     this.labelList = document.getElementById("label-list");
     this.label = null;
@@ -52,6 +53,7 @@ export class Label {
     this.label.addEventListener("dragstart", (e) => {
       this.labelX = e.pageX;
       this.labelY = e.pageY;
+      this.video.pause();
     });
 
     this.label.addEventListener("dragend", (e) => {
@@ -62,6 +64,7 @@ export class Label {
       this.labelX = e.pageX;
       this.labelY = e.pageY;
       this.checkBoundaries();
+      this.video.play();
     });
 
     this.label.addEventListener("mouseout", () => {
@@ -91,8 +94,8 @@ export class Label {
     let y = this.label.offsetTop;
     let w = this.label.clientWidth;
     let h = this.label.clientHeight;
-    let endX = this.video.clientWidth;
-    let endY = this.video.clientHeight;
+    let endX = this.videoContainer.clientWidth;
+    let endY = this.videoContainer.clientHeight;
 
     if (x + w > endX) {
       this.label.style.left = endX - w + "px";
