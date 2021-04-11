@@ -6,6 +6,8 @@ import {
   displayTime,
 } from "./VPFunctions.js";
 
+import { labels } from "./Labels.js";
+
 const videoContainer = document.getElementById("video-container");
 const videoOverlay = document.getElementById("video-overlay");
 const video = document.getElementById("video");
@@ -31,6 +33,18 @@ video.addEventListener("timeupdate", (event) => {
     play.innerHTML = "&#x21BA;";
     play.title = "Replay";
   }
+  /* 
+    Check the video playback and position the labels by matching their timeStamps
+  */
+  labels.forEach((item) => {
+    let time = Math.round(video.currentTime * 10) / 10;
+    let timeStamps = item.labelInfo.timeStamps;
+    if (timeStamps.hasOwnProperty(time)) {
+      let { x, y } = timeStamps[time].position;
+      let { w, h } = timeStamps[time].dimension;
+      item.labelElement = { x, y, w, h };
+    }
+  });
 });
 
 videoOverlay.addEventListener("contextmenu", (e) => {
@@ -44,10 +58,9 @@ durationDiv.addEventListener("click", (e) => {
   video.currentTime = updatedTime;
 });
 
-speed.addEventListener("change", function () {
+speed.addEventListener("input", function () {
   video.playbackRate = speed.value;
   speed.title = speed.value;
-  // display.innerText = displayvalue(playbackrate.value);
 });
 
 fullscreenVideo.addEventListener("click", function () {

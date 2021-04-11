@@ -20,10 +20,20 @@ export class Label {
     this.color = this.generateRandomColor();
     this.createLabel(this.color);
     this.deleteLabels = deleteLabels;
+    this.dragged = false;
   }
 
   get labelElement() {
     return this.label;
+  }
+
+  set labelElement({ x, y, w, h }) {
+    if (this.label) {
+      this.label.style.left = x + "px";
+      this.label.style.top = y + "px";
+      this.label.style.width = w + "px";
+      this.label.style.height = h + "px";
+    }
   }
 
   get labelInfo() {
@@ -53,6 +63,7 @@ export class Label {
       this.labelX = e.pageX;
       this.labelY = e.pageY;
       this.checkBoundaries();
+      this.dragged = true;
     });
 
     this.label.addEventListener("mouseout", () => {
@@ -60,12 +71,14 @@ export class Label {
       let h = this.label.clientHeight;
       this.dimension = { w, h };
 
-      let currentTime = Math.round(this.video.currentTime * 10) / 10;
-      this.addTimeStamps(currentTime, {
-        position: this.position,
-        dimension: this.dimension,
-      });
-      console.log(this.labelInfo);
+      if (this.dragged) {
+        let currentTime = Math.round(this.video.currentTime * 10) / 10;
+        this.addTimeStamps(currentTime, {
+          position: this.position,
+          dimension: this.dimension,
+        });
+        this.dragged = false;
+      }
 
       if (Number(this.video.dataset.isPlaying)) {
         this.video.play();
