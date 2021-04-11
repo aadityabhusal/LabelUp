@@ -1,10 +1,12 @@
 export function playPause(video, play) {
   if (video.paused || video.ended) {
     video.play();
+    video.dataset.isPlaying = "1";
     play.innerHTML = "&#10074;&#10074;";
     play.title = "Pause";
   } else {
     video.pause();
+    video.dataset.isPlaying = "0";
     play.innerHTML = "&#x25b6;";
     play.title = "Play";
   }

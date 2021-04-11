@@ -11,11 +11,11 @@ export class Label {
 
     this.labelX = 0;
     this.labelY = 0;
-    this.id = this.overlay.children.length;
-    this.data = "";
-    this.time = { start: 0, duration: 0 };
+    this.id = performance.now().toString(36).replace(/\./g, "");
+    this.name = "";
     this.position = { x: 0, y: 0 };
     this.dimension = { w: 100, h: 100 };
+    this.timeStamps = {};
 
     this.color = this.generateRandomColor();
     this.createLabel(this.color);
@@ -29,31 +29,20 @@ export class Label {
   get labelInfo() {
     return {
       id: this.id,
-      data: this.data,
+      name: this.name,
       color: this.color,
-      time: this.time,
-      position: this.position,
-      dimension: this.dimension,
+      timeStamps: this.timeStamps,
     };
   }
 
-  set labelInfo(data) {
-    this.data = data;
-  }
-
-  get labelTime() {
-    return this.time;
-  }
-
-  set labelTime(time) {
-    this.time = time;
+  set labelInfo(name) {
+    this.name = name;
   }
 
   labelListeners = () => {
     this.label.addEventListener("dragstart", (e) => {
       this.labelX = e.pageX;
       this.labelY = e.pageY;
-      this.video.pause();
     });
 
     this.label.addEventListener("dragend", (e) => {
@@ -64,13 +53,27 @@ export class Label {
       this.labelX = e.pageX;
       this.labelY = e.pageY;
       this.checkBoundaries();
-      this.video.play();
     });
 
     this.label.addEventListener("mouseout", () => {
       let w = this.label.clientWidth;
       let h = this.label.clientHeight;
       this.dimension = { w, h };
+
+      let currentTime = Math.round(this.video.currentTime * 10) / 10;
+      this.addTimeStamps(currentTime, {
+        position: this.position,
+        dimension: this.dimension,
+      });
+      console.log(this.labelInfo);
+
+      if (Number(this.video.dataset.isPlaying)) {
+        this.video.play();
+      }
+    });
+
+    this.label.addEventListener("mousedown", () => {
+      this.video.pause();
     });
 
     this.label.addEventListener("click", () => {
@@ -143,7 +146,7 @@ export class Label {
 
   labelInputListeners = () => {
     this.labelInput.addEventListener("keyup", (e) => {
-      this.data = e.target.value;
+      this.name = e.target.value;
     });
     this.labelInput.addEventListener("focus", this.selectLabel);
     this.labelInput.addEventListener("blur", () => this.highlightLabel(false));
@@ -171,6 +174,10 @@ export class Label {
     this.label.parentElement.removeChild(this.label);
     // this.labelDuration.parentElement.removeChild(this.labelDuration);
     this.deleteLabels(this.id);
+  };
+
+  addTimeStamps = (time, data) => {
+    this.timeStamps[time] = data;
   };
 
   createLabelDuration = () => {};
