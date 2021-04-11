@@ -13,6 +13,7 @@ const play = document.getElementById("play");
 const timeDiv = document.getElementById("time");
 const durationDiv = document.getElementById("duration");
 const currentTimeDiv = document.getElementById("currentTime");
+const speed = document.getElementById("speed");
 const fullscreenVideo = document.getElementById("fullscreen");
 
 let isFullscreen = false;
@@ -41,6 +42,12 @@ durationDiv.addEventListener("click", (e) => {
   let ddX = e.pageX - (videoContainer.offsetLeft + durationDiv.offsetLeft);
   let updatedTime = (video.duration * ddX) / durationDiv.clientWidth;
   video.currentTime = updatedTime;
+});
+
+speed.addEventListener("change", function () {
+  video.playbackRate = speed.value;
+  speed.title = speed.value;
+  // display.innerText = displayvalue(playbackrate.value);
 });
 
 fullscreenVideo.addEventListener("click", function () {
