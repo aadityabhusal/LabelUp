@@ -1,4 +1,9 @@
-import { playPause, updateCurrentTime, displayTime } from "./VPFunctions.js";
+import {
+  playPause,
+  updateCurrentTime,
+  displayTime,
+  getRates,
+} from "./VPFunctions.js";
 
 import { labels } from "./Labels.js";
 
@@ -29,11 +34,40 @@ video.addEventListener("timeupdate", (event) => {
   }
 
   labels.forEach((item) => {
-    let time = video.currentTime.toFixed(2);
-    let timeStamps = item.labelInfo.timeStamps;
-    if (timeStamps.hasOwnProperty(time)) {
-      let { x, y } = timeStamps[time].position;
-      let { w, h } = timeStamps[time].dimension;
+    let fullTimeStamps = {};
+    let sortedTimeStamps = Object.entries(item.labelInfo.timeStamps).sort(
+      (a, b) => a[0] - b[0]
+    );
+
+    // DO this when adding a new timestamp inside label class
+    sortedTimeStamps.forEach((item, index, array) => {
+      let first = array[index];
+      let second = array[index + 1];
+      if (second) {
+        let { rx, ry, rw, rh, t } = getRates(first, second);
+        let { x, y } = first[1].position;
+        let { w, h } = first[1].dimension;
+        console.log({ rx, ry, rw, rh, t });
+        for (
+          let i = Number(first[0]);
+          i < Number(second[0]);
+          i = (Number(i) + 0.1).toFixed(1)
+        ) {
+          x = rx == 0 ? (x - rx).toFixed(2) : x;
+          y = ry == 0 ? (y - ry).toFixed(2) : y;
+          w = rw == 0 ? (w - rw).toFixed(2) : h;
+          h = rh == 0 ? (h - rh).toFixed(2) : w;
+          fullTimeStamps[i] = { position: { x, y }, dimension: { w, h } };
+        }
+        console.log(fullTimeStamps);
+      }
+    });
+
+    let time = Math.round(video.currentTime * 10) / 10;
+    // let timeStamps = item.labelInfo.timeStamps;
+    if (fullTimeStamps.hasOwnProperty(time)) {
+      let { x, y } = fullTimeStamps[time].position;
+      let { w, h } = fullTimeStamps[time].dimension;
       item.labelElement = { x, y, w, h };
     }
   });

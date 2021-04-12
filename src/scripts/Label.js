@@ -15,6 +15,7 @@ export class Label {
     this.name = "";
     this.position = { x: 0, y: 0 };
     this.dimension = { w: 100, h: 100 };
+    this.checkPoints = {}; // Add/update in this when dragend
     this.timeStamps = {};
 
     this.color = this.generateRandomColor();
@@ -72,7 +73,7 @@ export class Label {
       this.dimension = { w, h };
 
       if (this.dragged) {
-        let currentTime = this.video.currentTime.toFixed(2);
+        let currentTime = Math.round(this.video.currentTime * 100) / 100;
         this.addTimeStamps(currentTime, {
           position: this.position,
           dimension: this.dimension,
