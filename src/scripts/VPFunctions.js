@@ -1,14 +1,8 @@
 export function playPause(video, play) {
   if (video.paused || video.ended) {
     video.play();
-    video.dataset.isPlaying = "1";
-    play.innerHTML = "&#10074;&#10074;";
-    play.title = "Pause";
   } else {
     video.pause();
-    video.dataset.isPlaying = "0";
-    play.innerHTML = "&#x25b6;";
-    play.title = "Play";
   }
 }
 
@@ -29,30 +23,4 @@ function formatTime(time) {
 
 export function updateCurrentTime(currentTimeDiv) {
   currentTimeDiv.style.width = (video.currentTime / video.duration) * 100 + "%";
-}
-
-/* View in fullscreen */
-export function openFullscreen(videoContainer) {
-  if (videoContainer.requestFullscreen) {
-    videoContainer.requestFullscreen();
-  } else if (videoContainer.webkitRequestFullscreen) {
-    /* Safari */
-    videoContainer.webkitRequestFullscreen();
-  } else if (videoContainer.msRequestFullscreen) {
-    /* IE11 */
-    videoContainer.msRequestFullscreen();
-  }
-}
-
-/* Close fullscreen */
-export function closeFullscreen() {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.webkitExitFullscreen) {
-    /* Safari */
-    document.webkitExitFullscreen();
-  } else if (document.msExitFullscreen) {
-    /* IE11 */
-    document.msExitFullscreen();
-  }
 }

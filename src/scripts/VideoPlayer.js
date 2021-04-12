@@ -1,10 +1,4 @@
-import {
-  playPause,
-  openFullscreen,
-  updateCurrentTime,
-  closeFullscreen,
-  displayTime,
-} from "./VPFunctions.js";
+import { playPause, updateCurrentTime, displayTime } from "./VPFunctions.js";
 
 import { labels } from "./Labels.js";
 
@@ -16,9 +10,6 @@ const timeDiv = document.getElementById("time");
 const durationDiv = document.getElementById("duration");
 const currentTimeDiv = document.getElementById("currentTime");
 const speed = document.getElementById("speed");
-const fullscreenVideo = document.getElementById("fullscreen");
-
-let isFullscreen = false;
 
 play.addEventListener("click", (e) => {
   playPause(video, play);
@@ -29,15 +20,16 @@ video.addEventListener("timeupdate", (event) => {
 
   displayTime(timeDiv, video);
 
-  if (video.ended) {
-    play.innerHTML = "&#x21BA;";
-    play.title = "Replay";
+  if (video.paused || video.ended) {
+    play.innerHTML = "&#x25b6;";
+    play.title = "Play";
+  } else {
+    play.innerHTML = "&#10074;&#10074;";
+    play.title = "Pause";
   }
-  /* 
-    Check the video playback and position the labels by matching their timeStamps
-  */
+
   labels.forEach((item) => {
-    let time = Math.round(video.currentTime * 10) / 10;
+    let time = video.currentTime.toFixed(2);
     let timeStamps = item.labelInfo.timeStamps;
     if (timeStamps.hasOwnProperty(time)) {
       let { x, y } = timeStamps[time].position;
@@ -58,18 +50,22 @@ durationDiv.addEventListener("click", (e) => {
   video.currentTime = updatedTime;
 });
 
-speed.addEventListener("input", function () {
+speed.addEventListener("input", function (e) {
+  e.preventDefault();
   video.playbackRate = speed.value;
   speed.title = speed.value;
 });
 
-fullscreenVideo.addEventListener("click", function () {
-  if (isFullscreen) {
-    closeFullscreen();
-    isFullscreen = false;
-  } else {
-    openFullscreen(videoContainer);
-    isFullscreen = true;
+window.addEventListener("keydown", (e) => {
+  if (e.keyCode == 32) {
+    playPause(video, play);
   }
-  updateCurrentTime(currentTimeDiv);
+  // Left Arrow
+  if (e.keyCode == 37) {
+    video.currentTime -= video.playbackRate;
+  }
+  // Right Arrow
+  if (e.keyCode == 39) {
+    video.currentTime += video.playbackRate;
+  }
 });

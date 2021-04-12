@@ -1,6 +1,6 @@
 #video-container {
   position: relative;
-  width: 850px;
+  /* width: 850px; */
   overflow: hidden;
   display: flex;
   flex-direction: column;

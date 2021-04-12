@@ -72,16 +72,12 @@ export class Label {
       this.dimension = { w, h };
 
       if (this.dragged) {
-        let currentTime = Math.round(this.video.currentTime * 10) / 10;
+        let currentTime = this.video.currentTime.toFixed(2);
         this.addTimeStamps(currentTime, {
           position: this.position,
           dimension: this.dimension,
         });
         this.dragged = false;
-      }
-
-      if (Number(this.video.dataset.isPlaying)) {
-        this.video.play();
       }
     });
 
