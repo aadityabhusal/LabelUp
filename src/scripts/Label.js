@@ -21,7 +21,7 @@ export class Label {
     this.color = this.generateRandomColor();
     this.createLabel(this.color);
     this.deleteLabels = deleteLabels;
-    this.dragged = false;
+    // this.dragged = false;
   }
 
   get labelElement() {
@@ -42,6 +42,7 @@ export class Label {
       id: this.id,
       name: this.name,
       color: this.color,
+      checkPoints: this.checkPoints,
       timeStamps: this.timeStamps,
     };
   }
@@ -64,7 +65,7 @@ export class Label {
       this.labelX = e.pageX;
       this.labelY = e.pageY;
       this.checkBoundaries();
-      this.dragged = true;
+      // this.dragged = true;
     });
 
     this.label.addEventListener("mouseout", () => {
@@ -72,14 +73,14 @@ export class Label {
       let h = this.label.clientHeight;
       this.dimension = { w, h };
 
-      if (this.dragged) {
-        let currentTime = Math.round(this.video.currentTime * 100) / 100;
-        this.addTimeStamps(currentTime, {
-          position: this.position,
-          dimension: this.dimension,
-        });
-        this.dragged = false;
-      }
+      // if (this.dragged) {
+      let currentTime = Math.round(this.video.currentTime * 100) / 100;
+      this.addCheckPoints(currentTime, {
+        position: this.position,
+        dimension: this.dimension,
+      });
+      // this.dragged = false;
+      // }
     });
 
     this.label.addEventListener("mousedown", () => {
@@ -186,8 +187,49 @@ export class Label {
     this.deleteLabels(this.id);
   };
 
-  addTimeStamps = (time, data) => {
-    this.timeStamps[time] = data;
+  addCheckPoints = (time, data) => {
+    this.checkPoints[time] = data;
+    this.timeStamps = this.addTimeStamps();
+  };
+
+  addTimeStamps = () => {
+    let fullTimeStamps = {};
+    let sortedCheckPoints = Object.entries(this.checkPoints).sort(
+      (a, b) => a[0] - b[0]
+    );
+
+    // DO this when adding a new timestamp inside label class
+    sortedCheckPoints.forEach((item, index, array) => {
+      let first = array[index];
+      let second = array[index + 1];
+      if (second) {
+        let { rx, ry, rw, rh, t } = this.getRates(first, second);
+        let { x, y } = first[1].position;
+        let { w, h } = first[1].dimension;
+        for (
+          let i = Number(first[0]);
+          i < Number(second[0]);
+          i = (Number(i) + 0.1).toFixed(1)
+        ) {
+          x = (x - rx).toFixed(2);
+          y = (y - ry).toFixed(2);
+          w = (w - rw).toFixed(2);
+          h = (h - rh).toFixed(2);
+          fullTimeStamps[i] = { position: { x, y }, dimension: { w, h } };
+        }
+      }
+    });
+    return fullTimeStamps;
+  };
+
+  getRates = (first, second) => {
+    let t = (Math.abs(Number(first[0]) - Number(second[0])) / 0.1).toFixed(2);
+    let rx = ((first[1].position.x - second[1].position.x) / t).toFixed(2);
+    let ry = ((first[1].position.y - second[1].position.y) / t).toFixed(2);
+    let rw = ((first[1].dimension.w - second[1].dimension.w) / t).toFixed(2);
+    let rh = ((first[1].dimension.h - second[1].dimension.h) / t).toFixed(2);
+
+    return { rx, ry, rw, rh, t };
   };
 
   createLabelDuration = () => {};
