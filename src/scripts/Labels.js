@@ -17,13 +17,8 @@ exportDataBtn.addEventListener("click", () => {
   let labelsData = JSON.stringify(labels.map((item) => item.labelInfo));
   let dataUri =
     "data:application/json;charset=utf-8," + encodeURIComponent(labelsData);
-  let fileName = video.currentSrc.split("/").pop().split(".").shift();
+  // let fileName = video.currentSrc.split("/").pop().split(".").shift();
   exportDataBtn.setAttribute("href", dataUri);
-  exportDataBtn.setAttribute("download", `${fileName}.json`);
+  exportDataBtn.setAttribute("download", `dataset.json`);
   console.log(labelsData);
 });
-
-/* 
-  Also there is no concept of duration of a label in the Label class
-  Possible Solution: When the video is being played, check all the labels and their time. If the position of the labels is not changing then add the result of (currentTime - label's startTime) 
-*/

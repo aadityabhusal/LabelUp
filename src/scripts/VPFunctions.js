@@ -13,8 +13,8 @@ export function displayTime(timeDiv, video) {
 }
 
 function formatTime(time) {
-  let min = Math.floor(time / 60);
-  let sec = Math.floor(time - min * 60);
+  let min = Math.floor(time / 60) || 0;
+  let sec = Math.floor(time - min * 60) || 0;
   return {
     min: min < 10 ? "0" + min : min,
     sec: sec < 10 ? "0" + sec : sec,

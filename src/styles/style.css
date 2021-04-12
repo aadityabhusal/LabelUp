@@ -1,8 +1,38 @@
 body {
   padding: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #222;
 }
 
 #container {
+  display: none;
+}
+
+#upload-container {
+  height: 90vh;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #222;
+}
+
+#video-upload {
+  display: none;
+}
+
+#video-upload-label {
+  padding: 20px;
+  border: 1px solid #555;
+  background-color: #e67e22;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: 0.3s ease all;
+  color: #ecf0f1;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+#video-upload-label:hover {
+  box-shadow: 2px 0px 10px 3px #555;
+  transform: scale(1.1);
 }

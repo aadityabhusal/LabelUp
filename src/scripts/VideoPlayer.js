@@ -1,5 +1,4 @@
 import { playPause, updateCurrentTime, displayTime } from "./VPFunctions.js";
-
 import { labels } from "./Labels.js";
 
 const videoContainer = document.getElementById("video-container");

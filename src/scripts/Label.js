@@ -198,7 +198,6 @@ export class Label {
       (a, b) => a[0] - b[0]
     );
 
-    // DO this when adding a new timestamp inside label class
     sortedCheckPoints.forEach((item, index, array) => {
       let first = array[index];
       let second = array[index + 1];
