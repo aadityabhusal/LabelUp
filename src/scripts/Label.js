@@ -8,6 +8,7 @@ export class Label {
     this.labelInput = null;
     this.labelDuration = null;
     this.removeLabel = null;
+    this.removeLabelBox = null;
 
     this.labelX = 0;
     this.labelY = 0;
@@ -16,16 +17,21 @@ export class Label {
     this.position = { x: 0, y: 0 };
     this.dimension = { w: 100, h: 100 };
     this.checkPoints = {}; // Add/update in this when dragend
+    this.sortedCheckPoints = [];
     this.timeStamps = {};
 
     this.color = this.generateRandomColor();
     this.createLabel(this.color);
     this.deleteLabels = deleteLabels;
-    // this.dragged = false;
+    this.dragged = false;
   }
 
   get labelElement() {
     return this.label;
+  }
+
+  get removeBox() {
+    return this.removeLabelBox;
   }
 
   set labelElement({ x, y, w, h }) {
@@ -43,6 +49,7 @@ export class Label {
       name: this.name,
       color: this.color,
       checkPoints: this.checkPoints,
+      sortedCheckPoints: this.sortedCheckPoints,
       timeStamps: this.timeStamps,
     };
   }
@@ -65,7 +72,7 @@ export class Label {
       this.labelX = e.pageX;
       this.labelY = e.pageY;
       this.checkBoundaries();
-      // this.dragged = true;
+      this.dragged = true;
     });
 
     this.label.addEventListener("mouseout", () => {
@@ -73,14 +80,14 @@ export class Label {
       let h = this.label.clientHeight;
       this.dimension = { w, h };
 
-      // if (this.dragged) {
-      let currentTime = Math.round(this.video.currentTime * 100) / 100;
-      this.addCheckPoints(currentTime, {
-        position: this.position,
-        dimension: this.dimension,
-      });
-      // this.dragged = false;
-      // }
+      if (this.dragged) {
+        let currentTime = this.video.currentTime.toFixed(1);
+        this.addCheckPoints(currentTime, {
+          position: this.position,
+          dimension: this.dimension,
+        });
+        this.dragged = false;
+      }
     });
 
     this.label.addEventListener("mousedown", () => {
@@ -90,6 +97,12 @@ export class Label {
     this.label.addEventListener("click", () => {
       this.labelInput.focus();
     });
+
+    this.removeLabelBox.addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.label.style.visibility = "hidden";
+      this.deleteCheckPoint();
+    });
   };
 
   createLabel = (color) => {
@@ -98,6 +111,13 @@ export class Label {
     this.label.classList.add("label");
     this.label.draggable = true;
     this.label.style.border = `3px solid rgb(${color.r}, ${color.g},${color.b})`;
+
+    this.removeLabelBox = document.createElement("div");
+    this.removeLabelBox.classList.add("labelBoxCloseIcon");
+    this.removeLabelBox.innerHTML = "&#x2716;";
+    this.removeLabelBox.style.backgroundColor = `rgb(${color.r}, ${color.g},${color.b})`;
+
+    this.label.appendChild(this.removeLabelBox);
     this.overlay.appendChild(this.label);
     this.labelListeners();
     this.createLabelInput();
@@ -159,7 +179,10 @@ export class Label {
     this.labelInput.addEventListener("keyup", (e) => {
       this.name = e.target.value;
     });
-    this.labelInput.addEventListener("focus", this.selectLabel);
+    this.labelInput.addEventListener("focus", () => {
+      this.selectLabel();
+      this.labelElement.style.visibility = "visible";
+    });
     this.labelInput.addEventListener("blur", () => this.highlightLabel(false));
     this.removeLabel.addEventListener("click", this.deleteLabel);
   };
@@ -192,13 +215,19 @@ export class Label {
     this.timeStamps = this.addTimeStamps();
   };
 
+  deleteCheckPoint = () => {
+    delete this.checkPoints[this.video.currentTime.toFixed(1)];
+    this.timeStamps = this.addTimeStamps();
+  };
+
   addTimeStamps = () => {
     let fullTimeStamps = {};
-    let sortedCheckPoints = Object.entries(this.checkPoints).sort(
+    console.log(this.checkPoints);
+    this.sortedCheckPoints = Object.entries(this.checkPoints).sort(
       (a, b) => a[0] - b[0]
     );
 
-    sortedCheckPoints.forEach((item, index, array) => {
+    this.sortedCheckPoints.forEach((item, index, array) => {
       let first = array[index];
       let second = array[index + 1];
       if (second) {
@@ -208,13 +237,16 @@ export class Label {
         for (
           let i = Number(first[0]);
           i < Number(second[0]);
-          i = (Number(i) + 0.1).toFixed(1)
+          i = Number(i) + 0.1
         ) {
           x = (x - rx).toFixed(2);
           y = (y - ry).toFixed(2);
           w = (w - rw).toFixed(2);
           h = (h - rh).toFixed(2);
-          fullTimeStamps[i] = { position: { x, y }, dimension: { w, h } };
+          fullTimeStamps[i.toFixed(1)] = {
+            position: { x, y },
+            dimension: { w, h },
+          };
         }
       }
     });

@@ -1,7 +1,7 @@
 body {
   padding: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #222;
+  /* background-color: #222; */
 }
 
 #container {
@@ -11,9 +11,17 @@ body {
 #upload-container {
   height: 90vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #222;
+  background-color: #34495e;
+}
+
+#upload-container h1 {
+  font-size: 40px;
+  color: #ecf0f1;
+  margin: 0;
+  margin-bottom: 80px;
 }
 
 #video-upload {
@@ -22,7 +30,7 @@ body {
 
 #video-upload-label {
   padding: 20px;
-  border: 1px solid #555;
+  border: 1px solid #bdc3c7; /*#555*/
   background-color: #e67e22;
   cursor: pointer;
   border-radius: 3px;
@@ -33,6 +41,6 @@ body {
 }
 
 #video-upload-label:hover {
-  box-shadow: 2px 0px 10px 3px #555;
+  box-shadow: 2px 0px 10px 3px #bdc3c7; /*#555*/
   transform: scale(1.1);
 }

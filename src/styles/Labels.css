@@ -56,6 +56,13 @@
   cursor: pointer;
 }
 
+.labelBoxCloseIcon {
+  position: absolute;
+  cursor: pointer;
+  padding: 1px 3px;
+  display: none;
+}
+
 #add-label-btn,
 #export-data-btn {
   cursor: pointer;

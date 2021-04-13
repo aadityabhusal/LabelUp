@@ -28,12 +28,28 @@ video.addEventListener("timeupdate", (event) => {
   }
 
   labels.forEach((item) => {
-    let time = Math.round(video.currentTime * 10) / 10;
+    let time = video.currentTime.toFixed(1);
     let timeStamps = item.labelInfo.timeStamps;
-    if (timeStamps.hasOwnProperty(time)) {
+    let checkPoints = item.labelInfo.checkPoints;
+    let sorted = item.labelInfo.sortedCheckPoints;
+    if (
+      timeStamps.hasOwnProperty(time) &&
+      Number(time) >= Number(sorted[0][0]) &&
+      Number(time) <= Number(sorted[sorted.length - 1][0])
+    ) {
       let { x, y } = timeStamps[time].position;
       let { w, h } = timeStamps[time].dimension;
+      item.labelElement.style.visibility = "visible";
       item.labelElement = { x, y, w, h };
+
+      if (checkPoints.hasOwnProperty(time)) {
+        item.removeBox.style.display = "block";
+      } else {
+        item.removeBox.style.display = "none";
+      }
+    } else {
+      if (Object.keys(item.labelInfo.checkPoints).length > 1)
+        item.labelElement.style.visibility = "hidden";
     }
   });
 });
