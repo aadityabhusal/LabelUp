@@ -83,6 +83,10 @@
   font-size: 14px;
 }
 
+#export-images-btn {
+  display: none;
+}
+
 #add-label-btn:hover,
 #export-data-btn:hover {
   box-shadow: 0px 2px 6px 2px #95a5a6;

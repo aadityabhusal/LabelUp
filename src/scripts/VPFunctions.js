@@ -24,5 +24,3 @@ function formatTime(time) {
 export function updateCurrentTime(currentTimeDiv) {
   currentTimeDiv.style.width = (video.currentTime / video.duration) * 100 + "%";
 }
-
-export function cropImage({ x, y, w, h, t }) {}

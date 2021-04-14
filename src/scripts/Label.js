@@ -251,9 +251,7 @@ export class Label {
           w = (w - rw).toFixed(2);
           h = (h - rh).toFixed(2);
 
-          /* Image Cropping Here */
-          let time = this.video.currentTime.toFixed(1);
-          this.imageList[t] = this.cropImage({ x, y, w, h, t, time });
+          this.cropImage({ x, y, w, h, i, time });
 
           fullTimeStamps[i.toFixed(1)] = {
             position: { x, y },
@@ -275,12 +273,11 @@ export class Label {
     return { rx, ry, rw, rh, t };
   };
 
-  cropImage = ({ x, y, w, h, t, time }) => {
-    this.video.currentTime = t;
+  cropImage = ({ x, y, w, h, i, time }) => {
+    this.video.currentTime = i.toFixed(1);
     this.canvas.width = w;
     this.canvas.height = h;
     this.context.drawImage(this.video, x, y, w, h, 0, 0, w, h);
-    this.video.currentTime = time;
-    return this.canvas.toDataURL("image/png");
+    this.imageList[i.toFixed(1)] = this.canvas.toDataURL("image/png");
   };
 }
