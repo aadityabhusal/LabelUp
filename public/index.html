@@ -13,7 +13,7 @@
     <div id="container">
       <div id="video-container">
         <div id="video-overlay"></div>
-        <video id="video" src="../assets/videos/Racing720.mp4"></video>
+        <video id="video"></video>
         <div id="controls">
           <button id="play" title="Play">&#x25b6;</button>
           <div id="time">00:00/00:00</div>
@@ -24,7 +24,7 @@
             type="range"
             id="speed"
             min=".1"
-            max="1"
+            max="1.5"
             value="1"
             step=".1"
             title="1"
@@ -38,6 +38,7 @@
         <a id="export-data-btn">Export Data</a>
       </div>
     </div>
+    <canvas id="canvas"></canvas>
     <div id="upload-container">
       <h1>Video Labeling Tool</h3>
       <label id="video-upload-label" for="video-upload">Upload Video</label>

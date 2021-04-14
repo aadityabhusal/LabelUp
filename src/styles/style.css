@@ -44,3 +44,7 @@ body {
   box-shadow: 2px 0px 10px 3px #bdc3c7; /*#555*/
   transform: scale(1.1);
 }
+
+#canvas {
+  display: none;
+}

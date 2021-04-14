@@ -10,7 +10,9 @@ function uploadVideo() {
   file.readAsDataURL(videoUpload.files[0]);
   file.onload = () => {
     video.setAttribute("src", file.result);
-    container.style.display = "flex";
-    uploadContainer.style.display = "none";
+    video.addEventListener("loadedmetadata", function () {
+      container.style.display = "flex";
+      uploadContainer.style.display = "none";
+    });
   };
 }

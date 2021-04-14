@@ -1,5 +1,6 @@
 const fileUpload = document.getElementById("file");
 let video = document.getElementById("video");
+let playBtn = document.getElementById("playbtn");
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 
@@ -8,8 +9,12 @@ fileUpload.addEventListener("change", uploadVideo);
 video.addEventListener("loadedmetadata", function () {
   canvas.width = this.videoWidth;
   canvas.height = this.videoHeight;
-  video.play();
+  // video.play();
   step();
+});
+
+playBtn.addEventListener("click", () => {
+  video.play();
 });
 
 function step() {
