@@ -1,5 +1,5 @@
 export class Label {
-  constructor(deleteLabels) {
+  constructor(deleteLabels, data = {}) {
     this.video = document.getElementById("video");
     this.videoContainer = document.getElementById("video-container");
     this.overlay = document.getElementById("video-overlay");
@@ -14,16 +14,19 @@ export class Label {
 
     this.labelX = 0;
     this.labelY = 0;
-    this.id = performance.now().toString(36).replace(/\./g, "");
-    this.name = "";
+    this.id = data.id || performance.now().toString(36).replace(/\./g, "");
+    this.name = data.name || "";
     this.position = { x: 0, y: 0 };
     this.dimension = { w: 100, h: 100 };
-    this.checkPoints = {}; // Add/update in this when dragend
-    this.sortedCheckPoints = [];
-    this.timeStamps = {};
+
+    this.checkPoints = data.checkPoints || {};
+    this.sortedCheckPoints = data.checkPoints
+      ? Object.entries(this.checkPoints).sort((a, b) => a[0] - b[0])
+      : [];
+    this.timeStamps = data.timeStamps || {};
     this.imageList = {};
 
-    this.color = this.generateRandomColor();
+    this.color = data.color || this.generateRandomColor();
     this.createLabel(this.color);
     this.deleteLabels = deleteLabels;
     this.dragged = false;
@@ -170,6 +173,7 @@ export class Label {
     this.labelInput = document.createElement("input");
     this.labelInput.classList.add("labelInput");
     this.labelInput.placeholder = "Enter label text";
+    this.labelInput.value = this.name;
     this.labelInput.style.border = `3px solid rgb(${this.color.r}, ${this.color.g},${this.color.b})`;
 
     this.removeLabel = document.createElement("div");
@@ -229,7 +233,7 @@ export class Label {
 
   addTimeStamps = () => {
     let fullTimeStamps = {};
-    console.log(this.checkPoints);
+
     this.sortedCheckPoints = Object.entries(this.checkPoints).sort(
       (a, b) => a[0] - b[0]
     );
@@ -251,8 +255,6 @@ export class Label {
           w = (w - rw).toFixed(2);
           h = (h - rh).toFixed(2);
 
-          this.cropImage({ x, y, w, h, i, time });
-
           fullTimeStamps[i.toFixed(1)] = {
             position: { x, y },
             dimension: { w, h },
@@ -273,11 +275,16 @@ export class Label {
     return { rx, ry, rw, rh, t };
   };
 
-  cropImage = ({ x, y, w, h, i, time }) => {
-    this.video.currentTime = i.toFixed(1);
-    this.canvas.width = w;
-    this.canvas.height = h;
-    this.context.drawImage(this.video, x, y, w, h, 0, 0, w, h);
-    this.imageList[i.toFixed(1)] = this.canvas.toDataURL("image/png");
+  cropImages = () => {
+    Object.entries(this.timeStamps).forEach((item) => {
+      let { x, y } = item[1].position;
+      let { w, h } = item[1].dimension;
+      console.log(item[0]);
+      this.video.currentTime = Number(item[0]);
+      this.canvas.width = w;
+      this.canvas.height = h;
+      this.context.drawImage(this.video, x, y, w, h, 0, 0, w, h);
+      this.imageList[item[0]] = this.canvas.toDataURL("image/png");
+    });
   };
 }

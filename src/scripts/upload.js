@@ -1,4 +1,5 @@
 const container = document.getElementById("container");
+const importExport = document.getElementById("import-export");
 const uploadContainer = document.getElementById("upload-container");
 let video = document.getElementById("video");
 const videoUpload = document.getElementById("video-upload");
@@ -12,6 +13,7 @@ function uploadVideo() {
     video.setAttribute("src", file.result);
     video.addEventListener("loadedmetadata", function () {
       container.style.display = "flex";
+      importExport.style.display = "flex";
       uploadContainer.style.display = "none";
     });
   };
