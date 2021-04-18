@@ -2,6 +2,7 @@ import { Label } from "./Label.js";
 const addLabelBtn = document.getElementById("add-label-btn");
 const importData = document.getElementById("import-data");
 const exportDataBtn = document.getElementById("export-data-btn");
+const exportImages = document.getElementById("export-images");
 const exportImagesBtn = document.getElementById("export-images-btn");
 export let labels = [];
 
@@ -36,14 +37,20 @@ exportDataBtn.addEventListener("click", () => {
 });
 
 exportImagesBtn.addEventListener("click", () => {
-  let imagesData = JSON.stringify(
-    labels.map((item) => {
-      item.cropImages();
-      return item.images;
-    })
-  );
-  let imagesDataUri =
-    "data:application/json;charset=utf-8," + encodeURIComponent(imagesData);
-  exportImagesBtn.setAttribute("href", imagesDataUri);
-  exportImagesBtn.setAttribute("download", `images.json`);
+  let imagesData = [];
+
+  labels.forEach(async (item, i) => {
+    await item.cropImages();
+    imagesData.push(item.images);
+
+    if (i === labels.length - 1) {
+      let imagesDataJSON = JSON.stringify(imagesData);
+      let imagesDataUri =
+        "data:application/json;charset=utf-8," +
+        encodeURIComponent(imagesDataJSON);
+      exportImages.setAttribute("href", imagesDataUri);
+      exportImages.setAttribute("download", `images.json`);
+      exportImages.click();
+    }
+  });
 });

@@ -276,14 +276,24 @@ export class Label {
   };
 
   cropImages = () => {
-    Object.entries(this.timeStamps).forEach((item) => {
-      let { x, y } = item[1].position;
-      let { w, h } = item[1].dimension;
-      this.video.currentTime = Number(item[0]);
-      this.canvas.width = w;
-      this.canvas.height = h;
-      this.context.drawImage(this.video, x, y, w, h, 0, 0, w, h);
-      this.imageList[item[0]] = this.canvas.toDataURL("image/png");
+    return new Promise((resolve) => {
+      let ts = Object.entries(this.timeStamps);
+      ts.forEach((item, i) => {
+        ((i) => {
+          setTimeout(() => {
+            let { x, y } = item[1].position;
+            let { w, h } = item[1].dimension;
+            this.video.currentTime = Number(item[0]);
+            this.canvas.width = w;
+            this.canvas.height = h;
+            this.context.drawImage(this.video, x, y + h, w, h, 0, 0, w, h);
+            this.imageList[item[0]] = this.canvas.toDataURL("image/png");
+            if (i === ts.length - 1) {
+              resolve();
+            }
+          }, i * 100);
+        })(i);
+      });
     });
   };
 }
