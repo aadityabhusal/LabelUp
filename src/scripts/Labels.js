@@ -19,7 +19,6 @@ importData.addEventListener("change", (e) => {
       let newLabel = new Label(deleteLabels, item);
       labels.push(newLabel);
     });
-    console.log();
   };
   reader.readAsText(file);
 });

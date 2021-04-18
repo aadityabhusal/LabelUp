@@ -279,7 +279,6 @@ export class Label {
     Object.entries(this.timeStamps).forEach((item) => {
       let { x, y } = item[1].position;
       let { w, h } = item[1].dimension;
-      console.log(item[0]);
       this.video.currentTime = Number(item[0]);
       this.canvas.width = w;
       this.canvas.height = h;
