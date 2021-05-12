@@ -286,7 +286,7 @@ export class Label {
             this.video.currentTime = Number(item[0]);
             this.canvas.width = w;
             this.canvas.height = h;
-            this.context.drawImage(this.video, x, y + h, w, h, 0, 0, w, h);
+            this.context.drawImage(this.video, x, y, w, h, 0, 0, w, h);
             this.imageList[item[0]] = this.canvas.toDataURL("image/png");
             if (i === ts.length - 1) {
               resolve();
