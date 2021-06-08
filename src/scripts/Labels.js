@@ -38,19 +38,19 @@ exportDataBtn.addEventListener("click", () => {
 
 exportImagesBtn.addEventListener("click", () => {
   let imagesData = [];
-
   labels.forEach(async (item, i) => {
-    await item.cropImages();
-    imagesData.push(item.images);
-
-    if (i === labels.length - 1) {
-      let imagesDataJSON = JSON.stringify(imagesData);
-      let imagesDataUri =
-        "data:application/json;charset=utf-8," +
-        encodeURIComponent(imagesDataJSON);
-      exportImages.setAttribute("href", imagesDataUri);
-      exportImages.setAttribute("download", `images.json`);
-      exportImages.click();
-    }
+    try {
+      await item.cropImages();
+      imagesData[i] = item.images;
+      if (imagesData.length === labels.length) {
+        let imagesDataJSON = JSON.stringify(imagesData);
+        let imagesDataUri =
+          "data:application/json;charset=utf-8," +
+          encodeURIComponent(imagesDataJSON);
+        exportImages.setAttribute("href", imagesDataUri);
+        exportImages.setAttribute("download", `images.json`);
+        exportImages.click();
+      }
+    } catch (error) {}
   });
 });

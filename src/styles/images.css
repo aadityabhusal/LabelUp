@@ -17,19 +17,35 @@ body {
   margin-bottom: 50px;
 }
 
+#button-container {
+  display: flex;
+}
+
 #import-images {
   display: none;
 }
 
-#import-images-label {
+#import-images-label,
+#export-images-label {
   padding: 20px;
   border: 1px solid #bdc3c7;
-  background-color: #fd7272;
+  background-color: #27ae60;
+  color: #fff;
   cursor: pointer;
   border-radius: 3px;
   transition: 0.3s ease all;
   font-size: 20px;
   font-weight: 600;
+}
+
+#export-images-label {
+  background: #2980b9;
+  margin-left: 30px;
+  display: none;
+}
+
+#export-images {
+  display: none;
 }
 
 #images-container {
@@ -40,11 +56,21 @@ body {
   justify-content: space-between;
 }
 
-#images-container div {
+#images-container > div {
   flex: 0 0 23%;
   text-align: center;
+  position: relative;
 }
 
 #images-container img {
   max-width: 100%;
+}
+
+.remove-image {
+  position: absolute;
+  top: 0px;
+  right: 5px;
+  color: #000;
+  background: transparent;
+  cursor: pointer;
 }
