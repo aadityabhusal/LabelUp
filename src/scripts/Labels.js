@@ -36,6 +36,12 @@ exportDataBtn.addEventListener("click", () => {
   exportDataBtn.setAttribute("download", `dataset.json`);
 });
 
+/* 
+  Some parts of this code section were inspired by the following blog post in-text citation
+  
+  (Export JSON Data To Downloadable File Using Javascript, 2016)
+*/
+
 exportImagesBtn.addEventListener("click", () => {
   let imagesData = [];
   labels.forEach(async (item, i) => {
