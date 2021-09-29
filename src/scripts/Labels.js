@@ -36,30 +36,12 @@ exportDataBtn.addEventListener("click", () => {
   exportDataBtn.setAttribute("download", `dataset.json`);
 });
 
-/* 
-  Some parts of this code section were inspired by the following blog post in-text citation
-  
-  (Export JSON Data To Downloadable File Using Javascript, 2016)
-*/
-
-exportImagesBtn.addEventListener("click", () => {
-  let imagesData = [];
-  new Promise((resolve) => {
-    labels.forEach(async (item, i) => {
-      await item.cropImages();
-      imagesData[i] = item.images;
-      let validImagesData = imagesData.filter((item) => Boolean(item));
-      if (validImagesData.length === labels.length) {
-        resolve();
-      }
-    });
-  }).then(() => {
-    let imagesDataJSON = JSON.stringify(imagesData);
-    let imagesDataUri =
-      "data:application/json;charset=utf-8," +
-      encodeURIComponent(imagesDataJSON);
-    exportImages.setAttribute("href", imagesDataUri);
-    exportImages.setAttribute("download", `images.json`);
-    exportImages.click();
-  });
+exportImagesBtn.addEventListener("click", async () => {
+  let imagesData = await Promise.all(labels.map((item) => item.cropImages()));
+  let imagesDataJSON = JSON.stringify(imagesData);
+  let imagesDataUri =
+    "data:application/json;charset=utf-8," + encodeURIComponent(imagesDataJSON);
+  exportImages.setAttribute("href", imagesDataUri);
+  exportImages.setAttribute("download", `images.json`);
+  exportImages.click();
 });

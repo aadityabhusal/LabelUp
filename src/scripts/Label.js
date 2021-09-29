@@ -289,7 +289,7 @@ export class Label {
             this.context.drawImage(this.video, x, y, w, h, 0, 0, w, h);
             this.imageList[item[0]] = this.canvas.toDataURL("image/png");
             if (i === ts.length - 1) {
-              resolve();
+              resolve(this.images);
             }
           }, i * 100);
         })(i);
