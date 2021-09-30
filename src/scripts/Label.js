@@ -275,25 +275,21 @@ export class Label {
     return { rx, ry, rw, rh, t };
   };
 
-  cropImages = () => {
-    return new Promise((resolve) => {
-      let ts = Object.entries(this.timeStamps);
-      ts.forEach((item, i) => {
-        ((i) => {
-          setTimeout(() => {
-            let { x, y } = item[1].position;
-            let { w, h } = item[1].dimension;
-            this.video.currentTime = Number(item[0]);
-            this.canvas.width = w;
-            this.canvas.height = h;
-            this.context.drawImage(this.video, x, y, w, h, 0, 0, w, h);
-            this.imageList[item[0]] = this.canvas.toDataURL("image/png");
-            if (i === ts.length - 1) {
-              resolve(this.images);
-            }
-          }, i * 100);
-        })(i);
+  cropImages = async () => {
+    for (const t in this.timeStamps) {
+      await new Promise((resolve) => {
+        let { x, y } = this.timeStamps[t].position;
+        let { w, h } = this.timeStamps[t].dimension;
+        setTimeout(() => {
+          this.video.currentTime = Number(t);
+          this.canvas.width = w;
+          this.canvas.height = h;
+          this.context.drawImage(this.video, x, y, w, h, 0, 0, w, h);
+          this.imageList[t] = this.canvas.toDataURL("image/png");
+          resolve();
+        }, 100);
       });
-    });
+    }
+    return this.images;
   };
 }
