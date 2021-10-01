@@ -287,7 +287,7 @@ export class Label {
           this.context.drawImage(this.video, x, y, w, h, 0, 0, w, h);
           this.imageList[t] = this.canvas.toDataURL("image/png");
           resolve();
-        }, 100);
+        }, 50);
       });
     }
     return this.images;

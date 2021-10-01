@@ -37,9 +37,10 @@ exportDataBtn.addEventListener("click", () => {
 });
 
 exportImagesBtn.addEventListener("click", async () => {
-  console.log(labels);
-  // Try using a for-loop here instead of a map. Mentioned in Label.js file too
-  let imagesData = await Promise.all(labels.map((item) => item.cropImages()));
+  let imagesData = [];
+  for (let i = 0; i < labels.length; i++) {
+    imagesData[i] = await labels[i].cropImages();
+  }
   let imagesDataJSON = JSON.stringify(imagesData);
   let imagesDataUri =
     "data:application/json;charset=utf-8," + encodeURIComponent(imagesDataJSON);
