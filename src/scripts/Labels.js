@@ -6,12 +6,6 @@ const exportImages = document.getElementById("export-images");
 const exportImagesBtn = document.getElementById("export-images-btn");
 export let labels = [];
 
-window.addEventListener("keydown", function (e) {
-  if (e.keyCode == 32 && e.target == document.body) {
-    e.preventDefault();
-  }
-});
-
 addLabelBtn.addEventListener("click", (e) => {
   let label = new Label(deleteLabels);
   labels.push(label);

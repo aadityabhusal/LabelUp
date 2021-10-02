@@ -77,6 +77,10 @@ export class Label {
       this.labelY = e.pageY;
     });
 
+    this.label.addEventListener("dragstart", (e) => {
+      console.log(e.dataTransfer.getData("text"));
+    });
+
     this.label.addEventListener("dragend", (e) => {
       this.label.style.left =
         this.label.offsetLeft - (this.labelX - e.pageX) + "px";

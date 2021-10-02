@@ -2,6 +2,7 @@ import { playPause, updateCurrentTime, displayTime } from "./VPFunctions.js";
 import { labels } from "./Labels.js";
 
 const videoPlayerContainer = document.getElementById("video-player-container");
+const videoContainer = document.getElementById("video-container");
 const videoOverlay = document.getElementById("video-overlay");
 const video = document.getElementById("video");
 const play = document.getElementById("play");
@@ -9,6 +10,7 @@ const timeDiv = document.getElementById("time");
 const durationDiv = document.getElementById("duration");
 const currentTimeDiv = document.getElementById("currentTime");
 const speed = document.getElementById("speed");
+const zoom = document.getElementById("zoom");
 
 play.addEventListener("click", (e) => {
   playPause(video, play);
@@ -20,10 +22,12 @@ video.addEventListener("timeupdate", (event) => {
   displayTime(timeDiv, video);
 
   if (video.paused || video.ended) {
-    play.innerHTML = "&#x25b6;";
+    play.innerHTML =
+      '<svg height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M10 8.64L15.27 12 10 15.36V8.64M8 5v14l11-7L8 5z"/></svg>';
     play.title = "Play";
   } else {
-    play.innerHTML = "&#10074;&#10074;";
+    play.innerHTML =
+      '<svg height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
     play.title = "Pause";
   }
 
@@ -74,6 +78,7 @@ speed.addEventListener("input", function (e) {
 
 window.addEventListener("keydown", (e) => {
   if (e.keyCode == 32) {
+    e.preventDefault();
     playPause(video, play);
   }
   // Left Arrow
@@ -84,4 +89,10 @@ window.addEventListener("keydown", (e) => {
   if (e.keyCode == 39) {
     video.currentTime += video.playbackRate;
   }
+});
+
+zoom.addEventListener("input", function (e) {
+  e.preventDefault();
+  videoContainer.style.transform = "scale(" + zoom.value + ")";
+  zoom.title = zoom.value;
 });
