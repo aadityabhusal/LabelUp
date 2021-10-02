@@ -11,39 +11,45 @@
   </head>
   <body>
     <div id="container">
-      <div id="video-container">
-        <div id="video-overlay"></div>
-        <video id="video"></video>
-        <div id="controls">
-          <button id="play" title="Play">&#x25b6;</button>
-          <div id="time">00:00/00:00</div>
-          <div id="duration">
-            <div id="currentTime"></div>
+      <div id="labeling-area">
+        <div id="video-player-container">
+          <div id="video-player">
+            <div id="video-container">
+              <div id="video-overlay"></div>
+              <video id="video"></video>
+            </div>
           </div>
-          <input
-            type="range"
-            id="speed"
-            min=".1"
-            max="1.5"
-            value="1"
-            step=".1"
-            title="1"
-          />
+          <div id="controls">
+            <button id="play" title="Play">&#x25b6;</button>
+            <div id="time">00:00/00:00</div>
+            <div id="duration">
+              <div id="currentTime"></div>
+            </div>
+            <input
+              type="range"
+              id="speed"
+              min=".1"
+              max="1.5"
+              value="1"
+              step=".1"
+              title="1"
+            />
+          </div>
+        </div>
+        <div id="labels-container">
+          <h3 id="label-list-title">Label List</h3>
+          <div id="label-list"></div>
+          <button id="add-label-btn">Add Label</button>
         </div>
       </div>
-      <div id="labels-container">
-        <h3 id="label-list-title">Label List</h3>
-        <div id="label-list"></div>
-        <button id="add-label-btn">Add Label</button>
+      <div id="import-export">
+        <label id="import-data-label" for="import-data">Import Data</label>
+        <input type="file" name="import" id="import-data" />
+        <a id="export-data-btn">Export Data</a>
+        <a id="export-images-btn">Export Images</a>
+        <a id="export-images">Export Images</a>
+        <a href="images.html" id="display-images-btn">Display Images</a>
       </div>
-    </div>
-    <div id="import-export">
-      <label id="import-data-label" for="import-data">Import Data</label>
-      <input type="file" name="import" id="import-data" />
-      <a id="export-data-btn">Export Data</a>
-      <a id="export-images-btn">Export Images</a>
-      <a id="export-images">Export Images</a>
-      <a href="images.html" id="display-images-btn">Display Images</a>
     </div>
     <canvas id="canvas"></canvas>
     <div id="upload-container">

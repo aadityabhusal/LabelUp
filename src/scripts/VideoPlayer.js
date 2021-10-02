@@ -1,7 +1,7 @@
 import { playPause, updateCurrentTime, displayTime } from "./VPFunctions.js";
 import { labels } from "./Labels.js";
 
-const videoContainer = document.getElementById("video-container");
+const videoPlayerContainer = document.getElementById("video-player-container");
 const videoOverlay = document.getElementById("video-overlay");
 const video = document.getElementById("video");
 const play = document.getElementById("play");
@@ -60,7 +60,8 @@ videoOverlay.addEventListener("contextmenu", (e) => {
 });
 
 durationDiv.addEventListener("click", (e) => {
-  let ddX = e.pageX - (videoContainer.offsetLeft + durationDiv.offsetLeft);
+  let ddX =
+    e.pageX - (videoPlayerContainer.offsetLeft + durationDiv.offsetLeft);
   let updatedTime = (video.duration * ddX) / durationDiv.clientWidth;
   video.currentTime = updatedTime;
 });

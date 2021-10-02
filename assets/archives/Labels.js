@@ -1,6 +1,6 @@
 import { checkBoundaries } from "./LabelFunctions.js";
 
-const videoContainer = document.getElementById("video-container");
+const videoPlayerContainer = document.getElementById("video-player-container");
 const currentLabel = document.getElementById("current-label");
 
 let labelX = 0;
@@ -16,5 +16,5 @@ currentLabel.addEventListener("dragend", (e) => {
   currentLabel.style.top = currentLabel.offsetTop - (labelY - e.pageY) + "px";
   labelX = e.pageX;
   labelY = e.pageY;
-  checkBoundaries(currentLabel, videoContainer);
+  checkBoundaries(currentLabel, videoPlayerContainer);
 });

@@ -14,6 +14,7 @@
 
 #labels-container {
   display: flex;
+  flex: 0 0 250px;
   flex-direction: column;
   padding: 5px;
   border: 1px solid #bdc3c7;
@@ -28,9 +29,7 @@
 }
 
 #label-list {
-  width: 250px;
   flex: 1;
-  max-height: 290px;
   padding-right: 5px;
   overflow-y: auto;
 }
@@ -121,6 +120,6 @@
 }
 
 #import-export {
-  display: none;
+  display: flex;
   padding: 10px;
 }

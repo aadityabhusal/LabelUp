@@ -1,6 +1,9 @@
 export class Label {
   constructor(deleteLabels, data = {}) {
     this.video = document.getElementById("video");
+    this.videoPlayerContainer = document.getElementById(
+      "video-player-container"
+    );
     this.videoContainer = document.getElementById("video-container");
     this.overlay = document.getElementById("video-overlay");
     this.labelList = document.getElementById("label-list");
@@ -138,18 +141,22 @@ export class Label {
     let y = this.label.offsetTop;
     let w = this.label.clientWidth;
     let h = this.label.clientHeight;
+    let borderSize = parseInt(
+      getComputedStyle(this.label, null).getPropertyValue("border-left-width"),
+      10
+    );
     let endX = this.videoContainer.clientWidth;
     let endY = this.videoContainer.clientHeight;
 
-    if (x + w > endX) {
-      this.label.style.left = endX - w + "px";
+    if (x + w + borderSize > endX) {
+      this.label.style.left = endX - w - borderSize + "px";
     } else if (x < 0) {
       this.label.style.left = "0px";
       x = 0;
     }
 
-    if (y + h > endY) {
-      this.label.style.top = endY - h + "px";
+    if (y + h + borderSize > endY) {
+      this.label.style.top = endY - h - borderSize + "px";
     } else if (y < 0) {
       this.label.style.top = "0px";
       y = 0;

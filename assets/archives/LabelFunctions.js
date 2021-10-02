@@ -1,8 +1,8 @@
-export function checkBoundaries(currentLabel, videoContainer) {
+export function checkBoundaries(currentLabel, videoPlayerContainer) {
   let x = currentLabel.offsetLeft + currentLabel.clientWidth;
   let y = currentLabel.offsetTop + currentLabel.clientHeight;
-  let endX = videoContainer.clientWidth;
-  let endY = videoContainer.clientHeight;
+  let endX = videoPlayerContainer.clientWidth;
+  let endY = videoPlayerContainer.clientHeight;
 
   if (x > endX) {
     currentLabel.style.left = endX - currentLabel.clientWidth + "px";
