@@ -32,7 +32,6 @@ export class Label {
     this.color = data.color || this.generateRandomColor();
     this.createLabel(this.color);
     this.deleteLabels = deleteLabels;
-    this.dragged = false;
   }
 
   get labelElement() {
@@ -72,43 +71,55 @@ export class Label {
   }
 
   labelListeners = () => {
-    this.label.addEventListener("dragstart", (e) => {
-      this.labelX = e.pageX;
-      this.labelY = e.pageY;
-    });
+    let xOffset,
+      yOffset = 0;
+    let targetLabel = null;
+    let isResized = false;
 
-    this.label.addEventListener("dragstart", (e) => {
-      console.log(e.dataTransfer.getData("text"));
-    });
-
-    this.label.addEventListener("dragend", (e) => {
-      this.label.style.left =
-        this.label.offsetLeft - (this.labelX - e.pageX) + "px";
-      this.label.style.top =
-        this.label.offsetTop - (this.labelY - e.pageY) + "px";
-      this.labelX = e.pageX;
-      this.labelY = e.pageY;
-      this.checkBoundaries();
-      this.dragged = true;
-    });
-
-    this.label.addEventListener("mouseout", () => {
-      let w = this.label.clientWidth;
-      let h = this.label.clientHeight;
-      this.dimension = { w, h };
-
-      if (this.dragged) {
-        let currentTime = this.video.currentTime.toFixed(1);
-        this.addCheckPoints(currentTime, {
-          position: this.position,
-          dimension: this.dimension,
-        });
-        this.dragged = false;
+    document.addEventListener("mousedown", (e) => {
+      if (e.target !== this.label) return;
+      this.video.pause();
+      targetLabel = this.label;
+      if (
+        e.clientX < targetLabel.offsetLeft + targetLabel.clientWidth - 10 &&
+        e.clientY < targetLabel.offsetTop + targetLabel.clientHeight - 10
+      ) {
+        xOffset = e.clientX - targetLabel.offsetLeft;
+        yOffset = e.clientY - targetLabel.offsetTop;
+      } else {
+        isResized = true;
       }
     });
 
-    this.label.addEventListener("mousedown", () => {
-      this.video.pause();
+    document.addEventListener("mousemove", (e) => {
+      if (!targetLabel || isResized) return;
+      targetLabel.style.left = e.clientX - xOffset + "px";
+      targetLabel.style.top = e.clientY - yOffset + "px";
+      let parentRect = targetLabel.parentElement.getBoundingClientRect();
+      let targetRect = targetLabel.getBoundingClientRect();
+
+      if (targetRect.left < parentRect.left) targetLabel.style.left = 0;
+      if (targetRect.top < parentRect.top) targetLabel.style.top = 0;
+      if (targetRect.right > parentRect.right)
+        targetLabel.style.left = parentRect.width - targetRect.width + "px";
+      if (targetRect.bottom > parentRect.bottom)
+        targetLabel.style.top = parentRect.height - targetRect.height + "px";
+    });
+
+    document.addEventListener("mouseup", () => {
+      if (!targetLabel) return;
+      this.dimension = {
+        w: targetLabel.clientWidth,
+        h: targetLabel.clientHeight,
+      };
+      this.position = { x: targetLabel.offsetLeft, y: targetLabel.offsetTop };
+      let currentTime = this.video.currentTime.toFixed(1);
+      this.addCheckPoints(currentTime, {
+        position: this.position,
+        dimension: this.dimension,
+      });
+      targetLabel = null;
+      isResized = false;
     });
 
     this.label.addEventListener("click", () => {
@@ -126,7 +137,6 @@ export class Label {
     this.label = document.createElement("div");
     this.label.id = "label" + this.id;
     this.label.classList.add("label");
-    this.label.draggable = true;
     this.label.style.border = `3px solid rgb(${color.r}, ${color.g},${color.b})`;
 
     this.removeLabelBox = document.createElement("div");
@@ -138,35 +148,6 @@ export class Label {
     this.overlay.appendChild(this.label);
     this.labelListeners();
     this.createLabelInput();
-  };
-
-  checkBoundaries = () => {
-    let x = this.label.offsetLeft;
-    let y = this.label.offsetTop;
-    let w = this.label.clientWidth;
-    let h = this.label.clientHeight;
-    let borderSize = parseInt(
-      getComputedStyle(this.label, null).getPropertyValue("border-left-width"),
-      10
-    );
-    let endX = this.videoContainer.clientWidth;
-    let endY = this.videoContainer.clientHeight;
-
-    if (x + w + borderSize > endX) {
-      this.label.style.left = endX - w - borderSize + "px";
-    } else if (x < 0) {
-      this.label.style.left = "0px";
-      x = 0;
-    }
-
-    if (y + h + borderSize > endY) {
-      this.label.style.top = endY - h - borderSize + "px";
-    } else if (y < 0) {
-      this.label.style.top = "0px";
-      y = 0;
-    }
-
-    this.position = { x, y };
   };
 
   generateRandomColor = () => {
