@@ -1,4 +1,4 @@
-export function playPause(video, play) {
+export function playPause(video) {
   if (video.paused || video.ended) {
     video.play();
   } else {

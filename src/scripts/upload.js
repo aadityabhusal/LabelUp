@@ -13,6 +13,8 @@ function uploadVideo() {
     video.addEventListener("loadedmetadata", function (e) {
       video.style.width = video.videoWidth + "px";
       video.style.height = video.videoHeight + "px";
+      window.videoWidth = video.videoWidth;
+      window.videoHeight = video.videoHeight;
       container.style.display = "flex";
       uploadContainer.style.display = "none";
     });

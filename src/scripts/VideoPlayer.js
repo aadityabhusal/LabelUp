@@ -2,7 +2,6 @@ import { playPause, updateCurrentTime, displayTime } from "./VPFunctions.js";
 import { labels } from "./Labels.js";
 
 const videoPlayerContainer = document.getElementById("video-player-container");
-const videoContainer = document.getElementById("video-container");
 const videoOverlay = document.getElementById("video-overlay");
 const video = document.getElementById("video");
 const play = document.getElementById("play");
@@ -13,7 +12,7 @@ const speed = document.getElementById("speed");
 const zoom = document.getElementById("zoom");
 
 play.addEventListener("click", (e) => {
-  playPause(video, play);
+  playPause(video);
 });
 
 video.addEventListener("timeupdate", (event) => {
@@ -30,6 +29,8 @@ video.addEventListener("timeupdate", (event) => {
       '<svg height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
     play.title = "Pause";
   }
+
+  /* Make this based on timestamps instead of label */
 
   labels.forEach((item) => {
     let time = video.currentTime.toFixed(1);
@@ -76,10 +77,10 @@ speed.addEventListener("input", function (e) {
   speed.title = speed.value;
 });
 
-window.addEventListener("keydown", (e) => {
+document.addEventListener("keydown", (e) => {
   if (e.keyCode == 32) {
     e.preventDefault();
-    playPause(video, play);
+    playPause(video);
   }
   // Left Arrow
   if (e.keyCode == 37) {
@@ -93,6 +94,8 @@ window.addEventListener("keydown", (e) => {
 
 zoom.addEventListener("input", function (e) {
   e.preventDefault();
-  videoContainer.style.transform = "scale(" + zoom.value + ")";
+  window.scale = zoom.value;
+  video.style.width = window.videoWidth * zoom.value + "px";
+  video.style.height = window.videoHeight * zoom.value + "px";
   zoom.title = zoom.value;
 });

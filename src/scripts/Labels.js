@@ -36,8 +36,8 @@ document.addEventListener("mousedown", (e) => {
   targetLabelBox = targetLabel.label;
   video.pause();
   if (
-    e.clientX < targetLabelBox.offsetLeft + targetLabelBox.clientWidth - 10 &&
-    e.clientY < targetLabelBox.offsetTop + targetLabelBox.clientHeight - 10
+    e.offsetX < targetLabelBox.clientWidth - 10 &&
+    e.offsetY < targetLabelBox.clientHeight - 10
   ) {
     xOffset = e.clientX - targetLabelBox.offsetLeft;
     yOffset = e.clientY - targetLabelBox.offsetTop;
@@ -64,12 +64,12 @@ document.addEventListener("mousemove", (e) => {
 document.addEventListener("mouseup", () => {
   if (!targetLabelBox) return;
   targetLabel.dimension = {
-    w: targetLabelBox.clientWidth,
-    h: targetLabelBox.clientHeight,
+    w: targetLabelBox.clientWidth / (window.scale || 1),
+    h: targetLabelBox.clientHeight / (window.scale || 1),
   };
   targetLabel.position = {
-    x: targetLabelBox.offsetLeft,
-    y: targetLabelBox.offsetTop,
+    x: targetLabelBox.offsetLeft / (window.scale || 1),
+    y: targetLabelBox.offsetTop / (window.scale || 1),
   };
   let currentTime = video.currentTime.toFixed(1);
   // Adds Checkpoints

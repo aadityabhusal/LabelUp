@@ -31,7 +31,6 @@
   display: inline-block;
   border-bottom: 1px solid #34495e;
   border-right: 1px solid #34495e;
-  transform-origin: 0% 0%;
 }
 
 #video-overlay {

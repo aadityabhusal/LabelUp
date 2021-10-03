@@ -40,10 +40,10 @@ export class Label {
 
   set labelElement({ x, y, w, h }) {
     if (this.label) {
-      this.label.style.left = x + "px";
-      this.label.style.top = y + "px";
-      this.label.style.width = w + "px";
-      this.label.style.height = h + "px";
+      this.label.style.left = x * (window.scale || 1) + "px";
+      this.label.style.top = y * (window.scale || 1) + "px";
+      this.label.style.width = w * (window.scale || 1) + "px";
+      this.label.style.height = h * (window.scale || 1) + "px";
     }
   }
 
@@ -193,6 +193,8 @@ export class Label {
 
     return { rx, ry, rw, rh, t };
   };
+
+  /* Make this based on timestamps instead of each label */
 
   cropImages = async () => {
     for (const t in this.timeStamps) {
