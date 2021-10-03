@@ -1,14 +1,11 @@
+const video = document.getElementById("video");
+const overlay = document.getElementById("video-overlay");
+const labelList = document.getElementById("label-list");
+const canvas = document.getElementById("canvas");
+const context = canvas.getContext("2d");
+
 export class Label {
   constructor(deleteLabels, data = {}) {
-    this.video = document.getElementById("video");
-    this.videoPlayerContainer = document.getElementById(
-      "video-player-container"
-    );
-    this.videoContainer = document.getElementById("video-container");
-    this.overlay = document.getElementById("video-overlay");
-    this.labelList = document.getElementById("label-list");
-    this.canvas = document.getElementById("canvas");
-    this.context = this.canvas.getContext("2d");
     this.label = null;
     this.labelInput = null;
     this.removeLabel = null;
@@ -61,14 +58,6 @@ export class Label {
     };
   }
 
-  get images() {
-    return this.imageList;
-  }
-
-  set labelInfo(name) {
-    this.name = name;
-  }
-
   labelListeners = () => {
     this.label.addEventListener("click", () => {
       this.labelInput.focus();
@@ -78,7 +67,7 @@ export class Label {
       e.stopPropagation();
       this.label.style.visibility = "hidden";
       // Deletes Checkpoint
-      delete this.checkPoints[this.video.currentTime.toFixed(1)];
+      delete this.checkPoints[video.currentTime.toFixed(1)];
       this.timeStamps = this.addTimeStamps();
     });
   };
@@ -95,7 +84,7 @@ export class Label {
     this.removeLabelBox.style.backgroundColor = `rgb(${color.r}, ${color.g},${color.b})`;
 
     this.label.appendChild(this.removeLabelBox);
-    this.overlay.appendChild(this.label);
+    overlay.appendChild(this.label);
     this.labelListeners();
     this.createLabelInput();
   };
@@ -131,7 +120,7 @@ export class Label {
     this.labelInputListeners();
     labelBox.appendChild(this.labelInput);
     labelBox.appendChild(this.removeLabel);
-    this.labelList.appendChild(labelBox);
+    labelList.appendChild(labelBox);
   };
 
   labelInputListeners = () => {
@@ -160,8 +149,6 @@ export class Label {
     this.label.parentElement.removeChild(this.label);
     this.deleteLabels(this.id);
   };
-
-  deleteCheckPoint = () => {};
 
   addTimeStamps = () => {
     let fullTimeStamps = {};
@@ -213,15 +200,15 @@ export class Label {
         let { x, y } = this.timeStamps[t].position;
         let { w, h } = this.timeStamps[t].dimension;
         setTimeout(() => {
-          this.video.currentTime = Number(t);
-          this.canvas.width = w;
-          this.canvas.height = h;
-          this.context.drawImage(this.video, x, y, w, h, 0, 0, w, h);
-          this.imageList[t] = this.canvas.toDataURL("image/png");
+          video.currentTime = Number(t);
+          canvas.width = w;
+          canvas.height = h;
+          context.drawImage(video, x, y, w, h, 0, 0, w, h);
+          this.imageList[t] = canvas.toDataURL("image/png");
           resolve();
         }, 50);
       });
     }
-    return this.images;
+    return this.imageList;
   };
 }
