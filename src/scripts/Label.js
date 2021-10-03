@@ -11,7 +11,6 @@ export class Label {
     this.context = this.canvas.getContext("2d");
     this.label = null;
     this.labelInput = null;
-    this.labelDuration = null;
     this.removeLabel = null;
     this.removeLabelBox = null;
 
@@ -71,57 +70,6 @@ export class Label {
   }
 
   labelListeners = () => {
-    let xOffset,
-      yOffset = 0;
-    let targetLabel = null;
-    let isResized = false;
-
-    document.addEventListener("mousedown", (e) => {
-      if (e.target !== this.label) return;
-      this.video.pause();
-      targetLabel = this.label;
-      if (
-        e.clientX < targetLabel.offsetLeft + targetLabel.clientWidth - 10 &&
-        e.clientY < targetLabel.offsetTop + targetLabel.clientHeight - 10
-      ) {
-        xOffset = e.clientX - targetLabel.offsetLeft;
-        yOffset = e.clientY - targetLabel.offsetTop;
-      } else {
-        isResized = true;
-      }
-    });
-
-    document.addEventListener("mousemove", (e) => {
-      if (!targetLabel || isResized) return;
-      targetLabel.style.left = e.clientX - xOffset + "px";
-      targetLabel.style.top = e.clientY - yOffset + "px";
-      let parentRect = targetLabel.parentElement.getBoundingClientRect();
-      let targetRect = targetLabel.getBoundingClientRect();
-
-      if (targetRect.left < parentRect.left) targetLabel.style.left = 0;
-      if (targetRect.top < parentRect.top) targetLabel.style.top = 0;
-      if (targetRect.right > parentRect.right)
-        targetLabel.style.left = parentRect.width - targetRect.width + "px";
-      if (targetRect.bottom > parentRect.bottom)
-        targetLabel.style.top = parentRect.height - targetRect.height + "px";
-    });
-
-    document.addEventListener("mouseup", () => {
-      if (!targetLabel) return;
-      this.dimension = {
-        w: targetLabel.clientWidth,
-        h: targetLabel.clientHeight,
-      };
-      this.position = { x: targetLabel.offsetLeft, y: targetLabel.offsetTop };
-      let currentTime = this.video.currentTime.toFixed(1);
-      this.addCheckPoints(currentTime, {
-        position: this.position,
-        dimension: this.dimension,
-      });
-      targetLabel = null;
-      isResized = false;
-    });
-
     this.label.addEventListener("click", () => {
       this.labelInput.focus();
     });
@@ -129,13 +77,15 @@ export class Label {
     this.removeLabelBox.addEventListener("click", (e) => {
       e.stopPropagation();
       this.label.style.visibility = "hidden";
-      this.deleteCheckPoint();
+      // Deletes Checkpoint
+      delete this.checkPoints[this.video.currentTime.toFixed(1)];
+      this.timeStamps = this.addTimeStamps();
     });
   };
 
   createLabel = (color) => {
     this.label = document.createElement("div");
-    this.label.id = "label" + this.id;
+    this.label.id = this.id;
     this.label.classList.add("label");
     this.label.style.border = `3px solid rgb(${color.r}, ${color.g},${color.b})`;
 
@@ -159,6 +109,12 @@ export class Label {
   };
 
   createLabelInput = () => {
+    /*     let {r,g,b} = this.color;
+    let x = `
+    <div class="label-box">
+      <input type="text" class="labelInput" placeholder="Enter label text" value="${this.name}" style="3px solid rgb(${r}, ${g},${b})" />
+      <div class="closeIcon">&#x2716;</div>
+    </div>`; */
     let labelBox = document.createElement("div");
     labelBox.classList.add("label-box");
 
@@ -183,24 +139,17 @@ export class Label {
       this.name = e.target.value;
     });
     this.labelInput.addEventListener("focus", () => {
-      this.selectLabel();
+      this.highlightLabel(true);
       this.labelElement.style.visibility = "visible";
     });
     this.labelInput.addEventListener("blur", () => this.highlightLabel(false));
     this.removeLabel.addEventListener("click", this.deleteLabel);
   };
 
-  selectLabel = () => {
-    this.highlightLabel(true);
-  };
-
   highlightLabel = (state) => {
     let boxShadow = state ? "0px 0px 10px 5px #fff" : "none";
-    // let border = state ? "1px solid #222" : "none";
     let zIndex = state ? "2" : "";
-
     this.label.style.boxShadow = boxShadow;
-    // this.label.style.border = border;
     this.label.style.zIndex = zIndex;
   };
 
@@ -209,19 +158,10 @@ export class Label {
     let parent = this.labelInput.parentElement;
     parent.parentElement.removeChild(parent);
     this.label.parentElement.removeChild(this.label);
-    // this.labelDuration.parentElement.removeChild(this.labelDuration);
     this.deleteLabels(this.id);
   };
 
-  addCheckPoints = (time, data) => {
-    this.checkPoints[time] = data;
-    this.timeStamps = this.addTimeStamps();
-  };
-
-  deleteCheckPoint = () => {
-    delete this.checkPoints[this.video.currentTime.toFixed(1)];
-    this.timeStamps = this.addTimeStamps();
-  };
+  deleteCheckPoint = () => {};
 
   addTimeStamps = () => {
     let fullTimeStamps = {};
