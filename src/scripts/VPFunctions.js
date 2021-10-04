@@ -9,7 +9,7 @@ export function playPause(video) {
 export function displayTime(timeDiv, video) {
   let cur = formatTime(video.currentTime);
   let dur = formatTime(video.duration);
-  timeDiv.innerHTML = cur.min + ":" + cur.sec + "/" + dur.min + ":" + dur.sec;
+  timeDiv.innerHTML = cur.min + ":" + cur.sec + " / " + dur.min + ":" + dur.sec;
 }
 
 function formatTime(time) {
