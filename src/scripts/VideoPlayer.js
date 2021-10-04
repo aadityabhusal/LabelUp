@@ -75,12 +75,14 @@ videoOverlay.addEventListener("contextmenu", (e) => {
   return false;
 });
 
-durationDiv.addEventListener("click", (e) => {
+export function changeDuration(e) {
   let ddX =
     e.pageX - (videoPlayerContainer.offsetLeft + durationDiv.offsetLeft);
   let updatedTime = (video.duration * ddX) / durationDiv.clientWidth;
   video.currentTime = updatedTime;
-});
+}
+
+durationDiv.addEventListener("click", changeDuration);
 
 volume.addEventListener("input", function (e) {
   e.preventDefault();

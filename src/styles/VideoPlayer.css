@@ -62,16 +62,26 @@
 }
 
 #duration {
-  height: 15px;
+  height: 20px;
   flex: 1;
   background: #f5f6fa;
   border-top: 1px solid #7f8c8d;
+  position: relative;
+  overflow: hidden;
 }
 
 #currentTime {
   height: inherit;
   background: #e74c3c;
   width: 0px;
+}
+
+#duration-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100px;
+  border-right: 1px solid #000;
 }
 
 .range-control {

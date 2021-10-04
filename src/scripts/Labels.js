@@ -1,4 +1,7 @@
 import { Label } from "./Label.js";
+import { changeDuration } from "./VideoPlayer.js";
+const durationDiv = document.getElementById("duration");
+const durationLine = document.getElementById("duration-line");
 const addLabelBtn = document.getElementById("add-label-btn");
 const importData = document.getElementById("import-data");
 const exportDataBtn = document.getElementById("export-data-btn");
@@ -29,58 +32,75 @@ let xOffset,
 let targetLabelBox = null;
 let targetLabel = null;
 let isResized = false;
+let isDurationClick = false;
 
 document.addEventListener("mousedown", (e) => {
-  if (!e.target.classList.contains("label")) return;
-  targetLabel = getLabelFromId(e.target.id);
-  targetLabelBox = targetLabel.label;
-  video.pause();
-  if (
-    e.offsetX < targetLabelBox.clientWidth - 10 &&
-    e.offsetY < targetLabelBox.clientHeight - 10
-  ) {
-    xOffset = e.clientX - targetLabelBox.offsetLeft;
-    yOffset = e.clientY - targetLabelBox.offsetTop;
+  if (e.target.classList.contains("label")) {
+    targetLabel = getLabelFromId(e.target.id);
+    targetLabelBox = targetLabel.label;
+    video.pause();
+    if (
+      e.offsetX < targetLabelBox.clientWidth - 10 &&
+      e.offsetY < targetLabelBox.clientHeight - 10
+    ) {
+      xOffset = e.clientX - targetLabelBox.offsetLeft;
+      yOffset = e.clientY - targetLabelBox.offsetTop;
+    } else {
+      isResized = true;
+    }
+  } else if (durationDiv.contains(e.target)) {
+    isDurationClick = true;
+    video.pause();
   } else {
-    isResized = true;
+    return;
   }
 });
 
 document.addEventListener("mousemove", (e) => {
-  if (!targetLabelBox || isResized) return;
-  targetLabelBox.style.left = e.clientX - xOffset + "px";
-  targetLabelBox.style.top = e.clientY - yOffset + "px";
-  let parentRect = targetLabelBox.parentElement.getBoundingClientRect();
-  let targetRect = targetLabelBox.getBoundingClientRect();
+  if (targetLabelBox && !isResized) {
+    targetLabelBox.style.left = e.clientX - xOffset + "px";
+    targetLabelBox.style.top = e.clientY - yOffset + "px";
+    let parentRect = targetLabelBox.parentElement.getBoundingClientRect();
+    let targetRect = targetLabelBox.getBoundingClientRect();
 
-  if (targetRect.left < parentRect.left) targetLabelBox.style.left = 0;
-  if (targetRect.top < parentRect.top) targetLabelBox.style.top = 0;
-  if (targetRect.right > parentRect.right)
-    targetLabelBox.style.left = parentRect.width - targetRect.width + "px";
-  if (targetRect.bottom > parentRect.bottom)
-    targetLabelBox.style.top = parentRect.height - targetRect.height + "px";
+    if (targetRect.left < parentRect.left) targetLabelBox.style.left = 0;
+    if (targetRect.top < parentRect.top) targetLabelBox.style.top = 0;
+    if (targetRect.right > parentRect.right)
+      targetLabelBox.style.left = parentRect.width - targetRect.width + "px";
+    if (targetRect.bottom > parentRect.bottom)
+      targetLabelBox.style.top = parentRect.height - targetRect.height + "px";
+  } else if (durationDiv.contains(e.target)) {
+    durationLine.style.left = e.clientX + "px";
+    if (isDurationClick) {
+      changeDuration(e);
+    }
+  }
 });
 
 document.addEventListener("mouseup", () => {
-  if (!targetLabelBox) return;
-  targetLabel.dimension = {
-    w: targetLabelBox.clientWidth / (window.scale || 1),
-    h: targetLabelBox.clientHeight / (window.scale || 1),
-  };
-  targetLabel.position = {
-    x: targetLabelBox.offsetLeft / (window.scale || 1),
-    y: targetLabelBox.offsetTop / (window.scale || 1),
-  };
-  let currentTime = video.currentTime.toFixed(1);
-  // Adds Checkpoints
-  targetLabel.checkPoints[currentTime] = {
-    position: targetLabel.position,
-    dimension: targetLabel.dimension,
-  };
-  targetLabel.timeStamps = targetLabel.addTimeStamps();
+  if (targetLabelBox) {
+    targetLabel.dimension = {
+      w: targetLabelBox.clientWidth / (window.scale || 1),
+      h: targetLabelBox.clientHeight / (window.scale || 1),
+    };
+    targetLabel.position = {
+      x: targetLabelBox.offsetLeft / (window.scale || 1),
+      y: targetLabelBox.offsetTop / (window.scale || 1),
+    };
+    let currentTime = video.currentTime.toFixed(1);
+    // Adds Checkpoints
+    targetLabel.checkPoints[currentTime] = {
+      position: targetLabel.position,
+      dimension: targetLabel.dimension,
+    };
+    targetLabel.timeStamps = targetLabel.addTimeStamps();
 
-  targetLabelBox = null;
-  isResized = false;
+    targetLabelBox = null;
+    isResized = false;
+  } else if (isDurationClick) {
+    video.play();
+    isDurationClick = false;
+  }
 });
 
 /* 
