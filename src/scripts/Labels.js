@@ -33,6 +33,7 @@ let targetLabelBox = null;
 let targetLabel = null;
 let isResized = false;
 let isDurationClick = false;
+let wasPlaying = false;
 
 document.addEventListener("mousedown", (e) => {
   if (e.target.classList.contains("label")) {
@@ -50,7 +51,10 @@ document.addEventListener("mousedown", (e) => {
     }
   } else if (durationDiv.contains(e.target)) {
     isDurationClick = true;
-    video.pause();
+    if (!video.paused) {
+      wasPlaying = true;
+      video.pause();
+    }
   } else {
     return;
   }
@@ -98,7 +102,10 @@ document.addEventListener("mouseup", () => {
     targetLabelBox = null;
     isResized = false;
   } else if (isDurationClick) {
-    video.play();
+    if (wasPlaying) {
+      video.play();
+      wasPlaying = false;
+    }
     isDurationClick = false;
   }
 });
