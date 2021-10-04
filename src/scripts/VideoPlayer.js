@@ -4,32 +4,25 @@ import { labels } from "./Labels.js";
 const videoPlayerContainer = document.getElementById("video-player-container");
 const videoOverlay = document.getElementById("video-overlay");
 const video = document.getElementById("video");
-const play = document.getElementById("play");
-const rewind = document.getElementById("rewind");
-const forward = document.getElementById("forward");
-const timeDiv = document.getElementById("time");
 const durationDiv = document.getElementById("duration");
-const currentTimeDiv = document.getElementById("currentTime");
-const speed = document.getElementById("speed");
-const zoom = document.getElementById("zoom");
-const volume = document.getElementById("volume");
+const play = document.getElementById("play");
 
 play.addEventListener("click", (e) => {
   playPause(video);
 });
 
-rewind.addEventListener("click", function (e) {
+document.getElementById("rewind").addEventListener("click", function (e) {
   video.currentTime -= video.playbackRate;
 });
 
-forward.addEventListener("click", function (e) {
+document.getElementById("forward").addEventListener("click", function (e) {
   video.currentTime += video.playbackRate;
 });
 
 video.addEventListener("timeupdate", (event) => {
-  updateCurrentTime(currentTimeDiv);
+  updateCurrentTime(document.getElementById("currentTime"));
 
-  displayTime(timeDiv, video);
+  displayTime(document.getElementById("time"), video);
 
   if (video.paused || video.ended) {
     play.innerHTML =
@@ -84,24 +77,27 @@ export function changeDuration(e) {
 
 durationDiv.addEventListener("click", changeDuration);
 
-volume.addEventListener("input", function (e) {
+document.getElementById("volume").addEventListener("input", function (e) {
   e.preventDefault();
-  video.volume = volume.value;
-  volume.title = volume.value * 100 + "%";
+  video.volume = this.value;
+  this.title = this.value * 100 + "%";
+  document.getElementById("volume-value").innerHTML = this.title;
 });
 
-speed.addEventListener("input", function (e) {
+document.getElementById("speed").addEventListener("input", function (e) {
   e.preventDefault();
-  video.playbackRate = speed.value;
-  speed.title = speed.value + "x";
+  video.playbackRate = this.value;
+  this.title = this.value + "x";
+  document.getElementById("speed-value").innerHTML = this.title;
 });
 
-zoom.addEventListener("input", function (e) {
+document.getElementById("zoom").addEventListener("input", function (e) {
   e.preventDefault();
-  window.scale = zoom.value;
-  video.style.width = window.videoWidth * zoom.value + "px";
-  video.style.height = window.videoHeight * zoom.value + "px";
-  zoom.title = zoom.value + "x";
+  window.scale = this.value;
+  video.style.width = window.videoWidth * this.value + "px";
+  video.style.height = window.videoHeight * this.value + "px";
+  this.title = this.value + "x";
+  document.getElementById("zoom-value").innerHTML = this.title;
 });
 
 document.addEventListener("keydown", (e) => {

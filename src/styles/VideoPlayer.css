@@ -36,7 +36,7 @@
 #controls-panel {
   display: flex;
   flex-direction: column;
-  background: rgb(0, 0, 0, 0.8);
+  background: #222;
 }
 
 #controls {
@@ -47,6 +47,7 @@
 .controls-section {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 #play {
@@ -80,27 +81,35 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 100px;
+  left: 0;
   border-right: 1px solid #000;
-}
-
-.range-control {
-  position: relative;
 }
 
 .range-control-slider {
   display: none;
-  transform: rotate(-90deg);
-  transform-origin: 0% 0%;
   position: absolute;
   z-index: 100;
-  top: 0;
-  left: 10px;
-  background-color: #ecf0f1;
+  bottom: 100%;
+  right: 0;
+  padding: 0.5rem 1rem;
+  background-color: #222;
 }
 
 input[type="range"] {
   cursor: pointer;
+}
+
+.range-control-info {
+  color: #fff;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.range-control-title {
+  font-size: 18px;
+  font-weight: 600;
 }
 
 #controls button {
