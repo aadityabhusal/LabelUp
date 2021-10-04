@@ -10,22 +10,6 @@
   flex: 1;
 }
 
-/* Video Player Scroll */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #ecf0f1;
-}
-::-webkit-scrollbar-thumb {
-  background: #bdc3c7;
-  border-radius: 5px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #95a5a6;
-}
-
 #video-container {
   position: relative;
   display: inline-block;
@@ -49,18 +33,23 @@
 
 /* Controls */
 
+#controls-panel {
+  display: flex;
+  flex-direction: column;
+  background: rgb(0, 0, 0, 0.8);
+}
+
 #controls {
   display: flex;
-  height: 26px;
-  padding: 2px;
-  background: rgb(0, 0, 0, 0.8);
+  justify-content: space-between;
+}
+
+.controls-section {
+  display: flex;
   align-items: center;
 }
 
 #play {
-  flex: 0 0 30px;
-  height: inherit;
-  margin-right: 10px;
   cursor: pointer;
   font-weight: bold;
 }
@@ -68,26 +57,39 @@
 #time {
   color: #fff;
   margin-right: 10px;
+  font-size: 14px;
+  margin-left: 0.5rem;
 }
 
 #duration {
-  height: inherit;
+  height: 15px;
   flex: 1;
-  background: rgb(189, 195, 199);
+  background: #f5f6fa;
+  border-top: 1px solid #7f8c8d;
 }
 
 #currentTime {
   height: inherit;
-  background: rgb(192, 57, 43);
+  background: #e74c3c;
   width: 0px;
 }
 
-#fullscreen {
-  height: inherit;
-  font-size: 24px;
-  line-height: 1;
-  padding: 0 5px;
-  margin-left: 10px;
+.range-control {
+  position: relative;
+}
+
+.range-control-slider {
+  display: none;
+  transform: rotate(-90deg);
+  transform-origin: 0% 0%;
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 10px;
+  background-color: #ecf0f1;
+}
+
+input[type="range"] {
   cursor: pointer;
 }
 
@@ -95,8 +97,35 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 3px 5px;
+}
+
+#controls .range-control button {
+  padding: 3px 10px;
 }
 
 #controls button:hover {
   background: rgb(255, 255, 255, 0.2);
+}
+
+.range-control:hover .range-control-slider {
+  display: block;
+}
+
+/* Video Player Scroll */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #ecf0f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #bdc3c7;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #95a5a6;
 }

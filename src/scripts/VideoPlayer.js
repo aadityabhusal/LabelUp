@@ -5,14 +5,25 @@ const videoPlayerContainer = document.getElementById("video-player-container");
 const videoOverlay = document.getElementById("video-overlay");
 const video = document.getElementById("video");
 const play = document.getElementById("play");
+const rewind = document.getElementById("rewind");
+const forward = document.getElementById("forward");
 const timeDiv = document.getElementById("time");
 const durationDiv = document.getElementById("duration");
 const currentTimeDiv = document.getElementById("currentTime");
 const speed = document.getElementById("speed");
 const zoom = document.getElementById("zoom");
+const volume = document.getElementById("volume");
 
 play.addEventListener("click", (e) => {
   playPause(video);
+});
+
+rewind.addEventListener("click", function (e) {
+  video.currentTime -= video.playbackRate;
+});
+
+forward.addEventListener("click", function (e) {
+  video.currentTime += video.playbackRate;
 });
 
 video.addEventListener("timeupdate", (event) => {
@@ -71,10 +82,24 @@ durationDiv.addEventListener("click", (e) => {
   video.currentTime = updatedTime;
 });
 
+volume.addEventListener("input", function (e) {
+  e.preventDefault();
+  video.volume = volume.value;
+  volume.title = volume.value * 100 + "%";
+});
+
 speed.addEventListener("input", function (e) {
   e.preventDefault();
   video.playbackRate = speed.value;
-  speed.title = speed.value;
+  speed.title = speed.value + "x";
+});
+
+zoom.addEventListener("input", function (e) {
+  e.preventDefault();
+  window.scale = zoom.value;
+  video.style.width = window.videoWidth * zoom.value + "px";
+  video.style.height = window.videoHeight * zoom.value + "px";
+  zoom.title = zoom.value + "x";
 });
 
 document.addEventListener("keydown", (e) => {
@@ -90,12 +115,4 @@ document.addEventListener("keydown", (e) => {
   if (e.keyCode == 39) {
     video.currentTime += video.playbackRate;
   }
-});
-
-zoom.addEventListener("input", function (e) {
-  e.preventDefault();
-  window.scale = zoom.value;
-  video.style.width = window.videoWidth * zoom.value + "px";
-  video.style.height = window.videoHeight * zoom.value + "px";
-  zoom.title = zoom.value;
 });
