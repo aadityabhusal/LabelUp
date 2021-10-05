@@ -39,11 +39,28 @@
   flex-direction: column;
   position: relative;
 }
+.label-color-picker {
+  border: 1px solid #bdc3c7;
+  position: absolute;
+  left: 5px;
+  top: 8px;
+  height: 16px;
+  width: 18px;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.label-color-picker input {
+  height: 0px;
+  width: 0px;
+  visibility: hidden;
+}
 
 .labelInput {
   border: 1px solid #bdc3c7;
-  padding: 5px;
-  margin-bottom: 5px;
+  padding: 8px 30px;
+  font-size: 15px;
+  margin-bottom: 8px;
   position: relative;
   outline: 0;
 }
@@ -51,7 +68,7 @@
 .closeIcon {
   position: absolute;
   right: 8px;
-  top: 4px;
+  top: 6px;
   cursor: pointer;
 }
 

@@ -9,6 +9,8 @@ export class Label {
     this.labelInput = null;
     this.removeLabel = null;
     this.removeLabelBox = null;
+    this.labelColorPicker = null;
+    this.labelColorInput = null;
 
     this.labelX = 0;
     this.labelY = 0;
@@ -75,12 +77,12 @@ export class Label {
     this.label = document.createElement("div");
     this.label.id = this.id;
     this.label.classList.add("label");
-    this.label.style.border = `3px solid rgb(${color.r}, ${color.g},${color.b})`;
+    this.label.style.border = `3px solid ${color}`;
 
     this.removeLabelBox = document.createElement("div");
     this.removeLabelBox.classList.add("labelBoxCloseIcon");
     this.removeLabelBox.innerHTML = "&#x2716;";
-    this.removeLabelBox.style.backgroundColor = `rgb(${color.r}, ${color.g},${color.b})`;
+    this.removeLabelBox.style.backgroundColor = `${color}`;
 
     this.label.appendChild(this.removeLabelBox);
     this.videoOverlay.appendChild(this.label);
@@ -89,11 +91,12 @@ export class Label {
   };
 
   generateRandomColor = () => {
-    let r = Math.floor(Math.random() * 255);
-    let g = Math.floor(Math.random() * 255);
-    let b = Math.floor(Math.random() * 255);
-
-    return { r, g, b };
+    let letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
   };
 
   createLabelInput = () => {
@@ -104,15 +107,22 @@ export class Label {
     this.labelInput.classList.add("labelInput");
     this.labelInput.placeholder = "Enter label text";
     this.labelInput.value = this.name;
-    this.labelInput.style.border = `3px solid rgb(${this.color.r}, ${this.color.g},${this.color.b})`;
 
     this.removeLabel = document.createElement("div");
     this.removeLabel.classList.add("closeIcon");
     this.removeLabel.innerHTML = "&#x2716;";
 
+    this.labelColorPicker = document.createElement("label");
+    this.labelColorPicker.classList.add("label-color-picker");
+    this.labelColorPicker.style.backgroundColor = this.color;
+    this.labelColorInput = document.createElement("input");
+    this.labelColorInput.type = "color";
+    this.labelColorPicker.appendChild(this.labelColorInput);
+
     this.labelInputListeners();
     labelBox.appendChild(this.labelInput);
     labelBox.appendChild(this.removeLabel);
+    labelBox.appendChild(this.labelColorPicker);
     this.labelList.appendChild(labelBox);
   };
 
@@ -126,6 +136,11 @@ export class Label {
     });
     this.labelInput.addEventListener("blur", () => this.highlightLabel(false));
     this.removeLabel.addEventListener("click", this.deleteLabel);
+    this.labelColorInput.addEventListener("input", (e) => {
+      this.color = this.labelColorInput.value;
+      this.labelColorPicker.style.backgroundColor = this.color;
+      this.label.style.borderColor = this.color;
+    });
   };
 
   highlightLabel = (state) => {
