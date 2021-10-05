@@ -102,9 +102,13 @@ document.addEventListener("keydown", (e) => {
 
   if (e.keyCode == 37) {
     video.currentTime -= video.playbackRate;
+    document.getElementById("currentTime").style.width =
+      (video.currentTime / video.duration) * 100 + "%";
   }
 
   if (e.keyCode == 39) {
     video.currentTime += video.playbackRate;
+    document.getElementById("currentTime").style.width =
+      (video.currentTime / video.duration) * 100 + "%";
   }
 });
