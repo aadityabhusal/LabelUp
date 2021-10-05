@@ -1,19 +1,40 @@
-import { playPause, displayTime, changeDuration } from "./utils.js";
+import {
+  playPause,
+  displayTime,
+  changeDuration,
+  skipDuration,
+} from "./utils.js";
 import { labels } from "./Labels.js";
 
 const video = document.getElementById("video");
 const play = document.getElementById("play");
+const currentTime = document.getElementById("currentTime");
 
 play.addEventListener("click", (e) => {
   playPause(video, play);
 });
 
 document.getElementById("rewind").addEventListener("click", function (e) {
-  video.currentTime -= video.playbackRate;
+  skipDuration(video, currentTime, "left");
 });
 
 document.getElementById("forward").addEventListener("click", function (e) {
-  video.currentTime += video.playbackRate;
+  skipDuration(video, currentTime, "right");
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.keyCode === 32) {
+    e.preventDefault();
+    playPause(video, play);
+  }
+
+  if (e.keyCode === 37) {
+    skipDuration(video, currentTime, "left");
+  }
+
+  if (e.keyCode === 39) {
+    skipDuration(video, currentTime, "right");
+  }
 });
 
 video.addEventListener("play", () => {
@@ -92,23 +113,4 @@ document.getElementById("zoom").addEventListener("input", function (e) {
   video.style.height = window.videoHeight * this.value + "px";
   this.title = this.value + "x";
   document.getElementById("zoom-value").innerHTML = this.title;
-});
-
-document.addEventListener("keydown", (e) => {
-  if (e.keyCode == 32) {
-    e.preventDefault();
-    playPause(video, play);
-  }
-
-  if (e.keyCode == 37) {
-    video.currentTime -= video.playbackRate;
-    document.getElementById("currentTime").style.width =
-      (video.currentTime / video.duration) * 100 + "%";
-  }
-
-  if (e.keyCode == 39) {
-    video.currentTime += video.playbackRate;
-    document.getElementById("currentTime").style.width =
-      (video.currentTime / video.duration) * 100 + "%";
-  }
 });

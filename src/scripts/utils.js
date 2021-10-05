@@ -33,3 +33,9 @@ export function changeDuration(e, video) {
   let updatedTime = (video.duration * ddX) / this.clientWidth;
   video.currentTime = updatedTime;
 }
+
+export function skipDuration(video, currentTime, direction) {
+  if (direction === "left") video.currentTime -= video.playbackRate;
+  else video.currentTime += video.playbackRate;
+  currentTime.style.width = (video.currentTime / video.duration) * 100 + "%";
+}

@@ -26,7 +26,7 @@ function displayImages(e) {
         removeIcon.addEventListener("click", (e) => {
           e.target.parentElement.style.display = "none";
           images.forEach((image, i) => {
-            if (i == e.target.dataset.item) {
+            if (i === e.target.dataset.item) {
               delete image[e.target.dataset.timestamp];
             }
           });
