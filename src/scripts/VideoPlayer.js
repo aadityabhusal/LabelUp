@@ -50,6 +50,8 @@ video.addEventListener("pause", () => {
 });
 
 video.addEventListener("timeupdate", () => {
+  currentTime.style.width = (video.currentTime / video.duration) * 100 + "%";
+
   displayTime(document.getElementById("time"), video);
 
   /* Make this based on timestamps instead of label */
