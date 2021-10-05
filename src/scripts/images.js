@@ -8,12 +8,6 @@ let images = [];
 importImages.addEventListener("change", displayImages);
 exportImagesLabel.addEventListener("click", exportImages);
 
-/* 
-  Some parts of this code section were inspired by the following in-text citation
-  
-  (Uploading a JSON file and using it, 2016)
-*/
-
 function displayImages(e) {
   images = [];
   let file = e.target.files[0];

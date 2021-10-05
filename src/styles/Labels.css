@@ -71,7 +71,7 @@
   outline: 0;
   padding: 10px 0;
   margin-top: 10px;
-  background: #27ae60;
+  background: #16a085;
   color: #fff;
   border: none;
   transition: 0.2s ease all;
@@ -90,7 +90,7 @@
 }
 
 #export-images-btn {
-  background-color: #f39c12;
+  background-color: #d35400;
 }
 
 #display-images-btn {
@@ -103,7 +103,7 @@
 }
 
 #import-data-label {
-  background: #9b59b6;
+  background: #8e44ad;
   font-size: 14px;
   text-align: center;
   flex: 0 0 200px;

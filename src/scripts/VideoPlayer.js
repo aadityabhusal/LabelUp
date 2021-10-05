@@ -1,14 +1,13 @@
-import { playPause, updateCurrentTime, displayTime } from "./VPFunctions.js";
+import { playPause, displayTime, changeDuration } from "./VPFunctions.js";
 import { labels } from "./Labels.js";
 
-const videoPlayerContainer = document.getElementById("video-player-container");
 const videoOverlay = document.getElementById("video-overlay");
 const video = document.getElementById("video");
 const durationDiv = document.getElementById("duration");
 const play = document.getElementById("play");
 
 play.addEventListener("click", (e) => {
-  playPause(video);
+  playPause(video, play);
 });
 
 document.getElementById("rewind").addEventListener("click", function (e) {
@@ -19,20 +18,20 @@ document.getElementById("forward").addEventListener("click", function (e) {
   video.currentTime += video.playbackRate;
 });
 
-video.addEventListener("timeupdate", (event) => {
-  updateCurrentTime(document.getElementById("currentTime"));
+video.addEventListener("play", () => {
+  play.innerHTML =
+    '<svg height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+  play.title = "Pause";
+});
 
+video.addEventListener("pause", () => {
+  play.innerHTML =
+    '<svg height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0z" fill="none"/><path d="M8 5v14l11-7z"/></svg>';
+  play.title = "Play";
+});
+
+video.addEventListener("timeupdate", () => {
   displayTime(document.getElementById("time"), video);
-
-  if (video.paused || video.ended) {
-    play.innerHTML =
-      '<svg height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0z" fill="none"/><path d="M8 5v14l11-7z"/></svg>';
-    play.title = "Play";
-  } else {
-    play.innerHTML =
-      '<svg height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
-    play.title = "Pause";
-  }
 
   /* Make this based on timestamps instead of label */
 
@@ -68,14 +67,9 @@ videoOverlay.addEventListener("contextmenu", (e) => {
   return false;
 });
 
-export function changeDuration(e) {
-  let ddX =
-    e.pageX - (videoPlayerContainer.offsetLeft + durationDiv.offsetLeft);
-  let updatedTime = (video.duration * ddX) / durationDiv.clientWidth;
-  video.currentTime = updatedTime;
-}
-
-durationDiv.addEventListener("click", changeDuration);
+durationDiv.addEventListener("click", function (e) {
+  changeDuration.call(this, e, video);
+});
 
 document.getElementById("volume").addEventListener("input", function (e) {
   e.preventDefault();
@@ -103,13 +97,13 @@ document.getElementById("zoom").addEventListener("input", function (e) {
 document.addEventListener("keydown", (e) => {
   if (e.keyCode == 32) {
     e.preventDefault();
-    playPause(video);
+    playPause(video, play);
   }
-  // Left Arrow
+
   if (e.keyCode == 37) {
     video.currentTime -= video.playbackRate;
   }
-  // Right Arrow
+
   if (e.keyCode == 39) {
     video.currentTime += video.playbackRate;
   }

@@ -1,3 +1,5 @@
+/* Video Player Utility Functions */
+
 export function playPause(video) {
   if (video.paused || video.ended) {
     video.play();
@@ -21,6 +23,13 @@ function formatTime(time) {
   };
 }
 
-export function updateCurrentTime(currentTimeDiv) {
-  currentTimeDiv.style.width = (video.currentTime / video.duration) * 100 + "%";
+export function changeDuration(e, video) {
+  let currentTime = document.getElementById("currentTime");
+  let videoPlayerContainer = document.getElementById("video-player-container");
+
+  let ddX = e.pageX - (videoPlayerContainer.offsetLeft + this.offsetLeft);
+  currentTime.style.width = ddX + "px";
+
+  let updatedTime = (video.duration * ddX) / this.clientWidth;
+  video.currentTime = updatedTime;
 }

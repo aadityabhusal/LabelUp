@@ -1,5 +1,5 @@
 import { Label } from "./Label.js";
-import { changeDuration } from "./VideoPlayer.js";
+import { changeDuration } from "./VPFunctions.js";
 const durationDiv = document.getElementById("duration");
 const durationLine = document.getElementById("duration-line");
 const addLabelBtn = document.getElementById("add-label-btn");
@@ -27,11 +27,12 @@ addLabelBtn.addEventListener("click", (e) => {
   Event Listeners for Dragging Label Boxes
 */
 
-let xOffset,
-  yOffset = 0;
+let xOffset = 0;
+let yOffset = 0;
 let targetLabelBox = null;
 let targetLabel = null;
 let isResized = false;
+
 let isDurationClick = false;
 let wasPlaying = false;
 
@@ -76,7 +77,7 @@ document.addEventListener("mousemove", (e) => {
   } else if (durationDiv.contains(e.target)) {
     durationLine.style.left = e.clientX + "px";
     if (isDurationClick) {
-      changeDuration(e);
+      changeDuration.call(durationDiv, e, video);
     }
   }
 });
