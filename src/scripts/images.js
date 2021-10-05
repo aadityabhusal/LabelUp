@@ -1,12 +1,11 @@
-const imagesContainer = document.getElementById("images-container");
-const importImagesLabel = document.getElementById("import-images-label");
-const importImages = document.getElementById("import-images");
-const exportImagesLabel = document.getElementById("export-images-label");
-const exportImagesBtn = document.getElementById("export-images");
 let images = [];
 
-importImages.addEventListener("change", displayImages);
-exportImagesLabel.addEventListener("click", exportImages);
+document
+  .getElementById("import-images")
+  .addEventListener("change", displayImages);
+document
+  .getElementById("export-images-label")
+  .addEventListener("click", exportImages);
 
 function displayImages(e) {
   images = [];
@@ -35,7 +34,7 @@ function displayImages(e) {
         img.src = image;
         imgBox.appendChild(img);
         imgBox.appendChild(removeIcon);
-        imagesContainer.appendChild(imgBox);
+        document.getElementById("images-container").appendChild(imgBox);
       });
     });
   };
@@ -44,6 +43,7 @@ function displayImages(e) {
 }
 
 function exportImages(e) {
+  const exportImagesBtn = document.getElementById("export-images");
   let imagesDataJSON = JSON.stringify(images);
   let imagesDataUri =
     "data:application/json;charset=utf-8," + encodeURIComponent(imagesDataJSON);

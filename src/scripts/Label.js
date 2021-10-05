@@ -1,11 +1,10 @@
-const video = document.getElementById("video");
-const overlay = document.getElementById("video-overlay");
-const labelList = document.getElementById("label-list");
-const canvas = document.getElementById("canvas");
-const context = canvas.getContext("2d");
-
 export class Label {
   constructor(deleteLabels, data = {}) {
+    this.video = document.getElementById("video");
+    this.videoOverlay = document.getElementById("video-overlay");
+    this.labelList = document.getElementById("label-list");
+    this.canvas = document.getElementById("canvas");
+
     this.label = null;
     this.labelInput = null;
     this.removeLabel = null;
@@ -67,7 +66,7 @@ export class Label {
       e.stopPropagation();
       this.label.style.visibility = "hidden";
       // Deletes Checkpoint
-      delete this.checkPoints[video.currentTime.toFixed(1)];
+      delete this.checkPoints[this.video.currentTime.toFixed(1)];
       this.timeStamps = this.addTimeStamps();
     });
   };
@@ -84,7 +83,7 @@ export class Label {
     this.removeLabelBox.style.backgroundColor = `rgb(${color.r}, ${color.g},${color.b})`;
 
     this.label.appendChild(this.removeLabelBox);
-    overlay.appendChild(this.label);
+    this.videoOverlay.appendChild(this.label);
     this.labelListeners();
     this.createLabelInput();
   };
@@ -98,12 +97,6 @@ export class Label {
   };
 
   createLabelInput = () => {
-    /*     let {r,g,b} = this.color;
-    let x = `
-    <div class="label-box">
-      <input type="text" class="labelInput" placeholder="Enter label text" value="${this.name}" style="3px solid rgb(${r}, ${g},${b})" />
-      <div class="closeIcon">&#x2716;</div>
-    </div>`; */
     let labelBox = document.createElement("div");
     labelBox.classList.add("label-box");
 
@@ -120,7 +113,7 @@ export class Label {
     this.labelInputListeners();
     labelBox.appendChild(this.labelInput);
     labelBox.appendChild(this.removeLabel);
-    labelList.appendChild(labelBox);
+    this.labelList.appendChild(labelBox);
   };
 
   labelInputListeners = () => {
@@ -194,19 +187,19 @@ export class Label {
     return { rx, ry, rw, rh, t };
   };
 
-  /* Make this based on timestamps instead of each label */
-
   cropImages = async () => {
     for (const t in this.timeStamps) {
       await new Promise((resolve) => {
         let { x, y } = this.timeStamps[t].position;
         let { w, h } = this.timeStamps[t].dimension;
         setTimeout(() => {
-          video.currentTime = Number(t);
-          canvas.width = w;
-          canvas.height = h;
-          context.drawImage(video, x, y, w, h, 0, 0, w, h);
-          this.imageList[t] = canvas.toDataURL("image/png");
+          this.video.currentTime = Number(t);
+          this.canvas.width = w;
+          this.canvas.height = h;
+          this.canvas
+            .getContext("2d")
+            .drawImage(this.video, x, y, w, h, 0, 0, w, h);
+          this.imageList[t] = this.canvas.toDataURL("image/png");
           resolve();
         }, 50);
       });

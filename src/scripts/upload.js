@@ -1,5 +1,3 @@
-const container = document.getElementById("container");
-const uploadContainer = document.getElementById("upload-container");
 let video = document.getElementById("video");
 const videoUpload = document.getElementById("video-upload");
 
@@ -15,8 +13,8 @@ function uploadVideo() {
       video.style.height = video.videoHeight + "px";
       window.videoWidth = video.videoWidth;
       window.videoHeight = video.videoHeight;
-      container.style.display = "flex";
-      uploadContainer.style.display = "none";
+      document.getElementById("container").style.display = "flex";
+      document.getElementById("upload-container").style.display = "none";
     });
   };
 }

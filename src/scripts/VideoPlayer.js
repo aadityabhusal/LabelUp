@@ -1,9 +1,7 @@
 import { playPause, displayTime, changeDuration } from "./utils.js";
 import { labels } from "./Labels.js";
 
-const videoOverlay = document.getElementById("video-overlay");
 const video = document.getElementById("video");
-const durationDiv = document.getElementById("duration");
 const play = document.getElementById("play");
 
 play.addEventListener("click", (e) => {
@@ -62,12 +60,14 @@ video.addEventListener("timeupdate", () => {
   });
 });
 
-videoOverlay.addEventListener("contextmenu", (e) => {
-  e.preventDefault();
-  return false;
-});
+document
+  .getElementById("video-overlay")
+  .addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+    return false;
+  });
 
-durationDiv.addEventListener("click", function (e) {
+document.getElementById("duration").addEventListener("click", function (e) {
   changeDuration.call(this, e, video);
 });
 

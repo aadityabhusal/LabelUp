@@ -1,12 +1,7 @@
 import { Label } from "./Label.js";
 import { changeDuration } from "./utils.js";
+
 const durationDiv = document.getElementById("duration");
-const durationLine = document.getElementById("duration-line");
-const addLabelBtn = document.getElementById("add-label-btn");
-const importData = document.getElementById("import-data");
-const exportDataBtn = document.getElementById("export-data-btn");
-const exportImages = document.getElementById("export-images");
-const exportImagesBtn = document.getElementById("export-images-btn");
 const video = document.getElementById("video");
 export let labels = [];
 
@@ -18,7 +13,7 @@ const getLabelFromId = (id) => {
   return labels.filter((item) => item.labelInfo.id === id)[0];
 };
 
-addLabelBtn.addEventListener("click", (e) => {
+document.getElementById("add-label-btn").addEventListener("click", (e) => {
   let label = new Label(deleteLabels);
   labels.push(label);
 });
@@ -75,7 +70,7 @@ document.addEventListener("mousemove", (e) => {
     if (targetRect.bottom > parentRect.bottom)
       targetLabelBox.style.top = parentRect.height - targetRect.height + "px";
   } else if (durationDiv.contains(e.target)) {
-    durationLine.style.left = e.clientX + "px";
+    document.getElementById("duration-line").style.left = e.clientX + "px";
     if (isDurationClick) {
       changeDuration.call(durationDiv, e, video);
     }
@@ -115,7 +110,7 @@ document.addEventListener("mouseup", () => {
   Importing and Exporting Data and Images Section
 */
 
-importData.addEventListener("change", (e) => {
+document.getElementById("import-data").addEventListener("change", (e) => {
   let file = e.target.files[0];
   let reader = new FileReader();
   reader.onload = (event) => {
@@ -128,23 +123,27 @@ importData.addEventListener("change", (e) => {
   reader.readAsText(file);
 });
 
-exportDataBtn.addEventListener("click", () => {
+document.getElementById("export-data-btn").addEventListener("click", () => {
   let labelsData = JSON.stringify(labels.map((item) => item.labelInfo));
   let labelsDataUri =
     "data:application/json;charset=utf-8," + encodeURIComponent(labelsData);
-  exportDataBtn.setAttribute("href", labelsDataUri);
-  exportDataBtn.setAttribute("download", `dataset.json`);
+  this.setAttribute("href", labelsDataUri);
+  this.setAttribute("download", `dataset.json`);
 });
 
-exportImagesBtn.addEventListener("click", async () => {
-  let imagesData = [];
-  for (let i = 0; i < labels.length; i++) {
-    imagesData[i] = await labels[i].cropImages();
-  }
-  let imagesDataJSON = JSON.stringify(imagesData);
-  let imagesDataUri =
-    "data:application/json;charset=utf-8," + encodeURIComponent(imagesDataJSON);
-  exportImages.setAttribute("href", imagesDataUri);
-  exportImages.setAttribute("download", `images.json`);
-  exportImages.click();
-});
+document
+  .getElementById("export-images-btn")
+  .addEventListener("click", async () => {
+    const exportImages = document.getElementById("export-images");
+    let imagesData = [];
+    for (let i = 0; i < labels.length; i++) {
+      imagesData[i] = await labels[i].cropImages();
+    }
+    let imagesDataJSON = JSON.stringify(imagesData);
+    let imagesDataUri =
+      "data:application/json;charset=utf-8," +
+      encodeURIComponent(imagesDataJSON);
+    exportImages.setAttribute("href", imagesDataUri);
+    exportImages.setAttribute("download", `images.json`);
+    exportImages.click();
+  });
