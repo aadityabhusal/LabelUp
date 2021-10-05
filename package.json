@@ -1,7 +1,7 @@
 {
   "name": "labelup",
   "version": "1.0.0",
-  "description": "A video labeling/annotation tool for generating machine learning dataset",
+  "description": "A video labeling/annotation tool for generating machine learning datasets",
   "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,8 +14,9 @@
     "video",
     "labeling",
     "annotation",
-    "machine learning",
-    "dataset"
+    "machine-learning",
+    "datasets",
+    "dataset-generation"
   ],
   "author": "Aaditya Bhusal",
   "license": "ISC",
