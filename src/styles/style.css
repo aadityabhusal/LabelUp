@@ -45,7 +45,7 @@ body {
 }
 
 #upload-container {
-  height: 90vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -53,10 +53,16 @@ body {
   background-color: #34495e;
 }
 
-#upload-container h1 {
+#upload-container h1,
+#upload-container p {
   font-size: 40px;
   color: #ecf0f1;
   margin: 0;
+  margin-bottom: 20px;
+}
+
+#upload-container p {
+  font-size: 20px;
   margin-bottom: 80px;
 }
 
