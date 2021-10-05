@@ -1,5 +1,5 @@
 import { Label } from "./Label.js";
-import { changeDuration } from "./VPFunctions.js";
+import { changeDuration } from "./utils.js";
 const durationDiv = document.getElementById("duration");
 const durationLine = document.getElementById("duration-line");
 const addLabelBtn = document.getElementById("add-label-btn");

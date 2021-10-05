@@ -1,4 +1,4 @@
-import { playPause, displayTime, changeDuration } from "./VPFunctions.js";
+import { playPause, displayTime, changeDuration } from "./utils.js";
 import { labels } from "./Labels.js";
 
 const videoOverlay = document.getElementById("video-overlay");
