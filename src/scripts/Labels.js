@@ -3,6 +3,7 @@ import { changeDuration } from "./utils.js";
 
 const durationDiv = document.getElementById("duration");
 const video = document.getElementById("video");
+const loadingMask = document.getElementById("loading-mask");
 export let labels = [];
 
 const deleteLabels = (id) => {
@@ -30,6 +31,8 @@ let isResized = false;
 
 let isDurationClick = false;
 let wasPlaying = false;
+
+let isButtonClicked = false;
 
 document.addEventListener("mousedown", (e) => {
   if (e.target.classList.contains("label")) {
@@ -111,6 +114,8 @@ document.addEventListener("mouseup", () => {
 */
 
 document.getElementById("import-data").addEventListener("change", (e) => {
+  if (isButtonClicked) return;
+  isButtonClicked = true;
   let file = e.target.files[0];
   let reader = new FileReader();
   reader.onload = (event) => {
@@ -121,22 +126,30 @@ document.getElementById("import-data").addEventListener("change", (e) => {
     });
   };
   reader.readAsText(file);
+  isButtonClicked = false;
 });
 
 document
   .getElementById("export-data-btn")
   .addEventListener("click", function () {
+    if (isButtonClicked) return;
+    isButtonClicked = true;
     let labelsData = JSON.stringify(labels.map((item) => item.labelInfo));
     let labelsDataUri =
       "data:application/json;charset=utf-8," + encodeURIComponent(labelsData);
     this.setAttribute("href", labelsDataUri);
     this.setAttribute("download", `dataset.json`);
+    isButtonClicked = false;
   });
 
 document
   .getElementById("export-images-btn")
   .addEventListener("click", async () => {
+    if (isButtonClicked) return;
+    isButtonClicked = true;
+    loadingMask.style.display = "flex";
     const exportImages = document.getElementById("export-images");
+
     let imagesData = [];
     for (let i = 0; i < labels.length; i++) {
       imagesData[i] = await labels[i].cropImages();
@@ -148,4 +161,7 @@ document
     exportImages.setAttribute("href", imagesDataUri);
     exportImages.setAttribute("download", `images.json`);
     exportImages.click();
+
+    isButtonClicked = false;
+    loadingMask.style.display = "none";
   });
