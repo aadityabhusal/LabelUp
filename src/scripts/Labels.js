@@ -123,13 +123,15 @@ document.getElementById("import-data").addEventListener("change", (e) => {
   reader.readAsText(file);
 });
 
-document.getElementById("export-data-btn").addEventListener("click", () => {
-  let labelsData = JSON.stringify(labels.map((item) => item.labelInfo));
-  let labelsDataUri =
-    "data:application/json;charset=utf-8," + encodeURIComponent(labelsData);
-  this.setAttribute("href", labelsDataUri);
-  this.setAttribute("download", `dataset.json`);
-});
+document
+  .getElementById("export-data-btn")
+  .addEventListener("click", function () {
+    let labelsData = JSON.stringify(labels.map((item) => item.labelInfo));
+    let labelsDataUri =
+      "data:application/json;charset=utf-8," + encodeURIComponent(labelsData);
+    this.setAttribute("href", labelsDataUri);
+    this.setAttribute("download", `dataset.json`);
+  });
 
 document
   .getElementById("export-images-btn")
