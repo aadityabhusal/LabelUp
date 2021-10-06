@@ -151,8 +151,16 @@
         A video labeling/annotation tool for generating machine learning
         datasets
       </p>
-      <label id="video-upload-label" for="video-upload">Upload Video</label>
-      <input type="file" name="upload" id="video-upload" />
+      <div id="button-container">
+        <label id="video-upload-label" for="video-upload">Upload Video</label>
+        <input type="file" name="upload" id="video-upload" />
+        <a
+          id="import-images-page"
+          href="images.html"
+          title="Go to Import Images Page"
+          >Import Images</a
+        >
+      </div>
     </div>
     <script src="../src/scripts/utils.js" type="module"></script>
     <script src="../src/scripts/VideoPlayer.js" type="module"></script>

@@ -84,7 +84,14 @@ body {
   display: none;
 }
 
-#video-upload-label {
+#button-container {
+  display: flex;
+  justify-content: space-around;
+  width: 450px;
+}
+
+#video-upload-label,
+#import-images-page {
   padding: 20px;
   border: 1px solid #bdc3c7; /*#555*/
   background-color: #e67e22;
@@ -94,6 +101,11 @@ body {
   color: #ecf0f1;
   font-size: 20px;
   font-weight: 600;
+}
+
+#import-images-page {
+  text-decoration: none;
+  background-color: #16a085;
 }
 
 #video-upload-label:hover {
