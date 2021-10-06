@@ -7,6 +7,12 @@ body {
 
 #logo {
   margin-bottom: 20px;
+  max-width: 100%;
+  text-align: center;
+}
+
+#logo img {
+  width: 80%;
 }
 
 #editor-logo {
@@ -72,6 +78,7 @@ body {
   color: #ecf0f1;
   margin: 0;
   margin-bottom: 20px;
+  padding: 0 1rem;
 }
 
 #upload-container p {
@@ -87,7 +94,7 @@ body {
 #button-container {
   display: flex;
   justify-content: space-around;
-  width: 450px;
+  flex-wrap: wrap;
 }
 
 #video-upload-label,
@@ -101,6 +108,9 @@ body {
   color: #ecf0f1;
   font-size: 20px;
   font-weight: 600;
+  margin: 30px;
+  margin-top: 0;
+  text-align: center;
 }
 
 #import-images-page {

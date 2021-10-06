@@ -20,7 +20,7 @@ body {
 }
 
 #logo img {
-  width: 100%;
+  width: 80%;
 }
 
 #head-section h1 {
@@ -53,6 +53,7 @@ body {
   font-weight: 600;
   margin: 30px;
   margin-top: 0;
+  text-align: center;
 }
 
 #export-images-label {
