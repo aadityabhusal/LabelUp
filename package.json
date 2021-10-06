@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "A video labeling/annotation tool for generating machine learning datasets",
   "main": "./src/index.js",
+  "source": "public/index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "parcel -p 3000",
+    "build": "parcel build"
   },
   "repository": {
     "type": "git",
@@ -23,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/aadityabhusal/LabelUp/issues"
   },
-  "homepage": "https://github.com/aadityabhusal/LabelUp#readme"
+  "homepage": "https://github.com/aadityabhusal/LabelUp#readme",
+  "devDependencies": {
+    "parcel": "^2.0.0-rc.0"
+  }
 }
