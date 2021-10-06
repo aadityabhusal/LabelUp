@@ -3,6 +3,7 @@
   max-width: calc(100vw - 270px);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 #video-player {
@@ -37,7 +38,6 @@
   display: flex;
   flex-direction: column;
   background: #222;
-  overflow: hidden;
 }
 
 #controls {
@@ -61,6 +61,8 @@
   margin-right: 10px;
   font-size: 14px;
   margin-left: 0.5rem;
+  flex-shrink: 0;
+  margin-right: 3rem;
 }
 
 #duration {
