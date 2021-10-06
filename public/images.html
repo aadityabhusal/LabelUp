@@ -4,19 +4,38 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dataset Images</title>
+    <link
+      rel="shortcut icon"
+      href="../public/assets/favicon.ico"
+      type="image/x-icon"
+    />
+    <meta
+      name="description"
+      content="Import images dataset exported from LabelUp"
+    />
+    <title>LabelUP - Import Images Dataset</title>
     <link rel="stylesheet" href="../src/styles/images.css" />
   </head>
   <body>
-    <div id="import-container">
-      <h1>Import Images Dataset</h3>
+    <div id="head-section">
+      <a id="logo" href="/" title="LabelUp Home">
+        <img src="../public/assets/logoDark.png" alt="Logo" title="LabelUp" />
+      </a>
+      <h1>Import images dataset exported from LabelUp</h1>
       <div id="button-container">
-        <label id="import-images-label" for="import-images">Import Images</label>
+        <label id="import-images-label" for="import-images"
+          >Import Images</label
+        >
         <input type="file" name="import" id="import-images" />
         <a id="export-images-label">Export Images</a>
         <a id="export-images">Export Images</a>
       </div>
+      <p id="export-message">
+        Remove unwanted images and click "Export Images" button above to export
+        the updated dataset
+      </p>
     </div>
+    <h2 id="no-images">No Images to Display</h2>
     <div id="images-container"></div>
   </body>
   <script src="../src/scripts/images.js"></script>

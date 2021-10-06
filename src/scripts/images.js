@@ -15,10 +15,18 @@ function displayImages(e) {
     let importedImages = JSON.parse(event.target.result);
     images = importedImages;
     importedImages.forEach((item, i) => {
+      let imgSection = document.createElement("div");
+      imgSection.classList.add("image-section");
+      let imgSectionTitle = document.createElement("h3");
+      imgSectionTitle.innerHTML = "Title";
+      let imgSectionList = document.createElement("div");
+      imgSectionList.classList.add("image-section-list");
+
       Object.entries(item).forEach(([key, image]) => {
         let imgBox = document.createElement("div");
         let img = document.createElement("img");
         let removeIcon = document.createElement("div");
+
         removeIcon.dataset.item = i;
         removeIcon.dataset.timestamp = key;
         removeIcon.classList.add("remove-image");
@@ -34,12 +42,18 @@ function displayImages(e) {
         img.src = image;
         imgBox.appendChild(img);
         imgBox.appendChild(removeIcon);
-        document.getElementById("images-container").appendChild(imgBox);
+        imgSectionList.appendChild(imgBox);
       });
+      imgSection.appendChild(imgSectionTitle);
+      imgSection.appendChild(imgSectionList);
+      document.getElementById("images-container").appendChild(imgSection);
     });
+    if (images.length)
+      document.getElementById("no-images").style.display = "none";
   };
   reader.readAsText(file);
   document.getElementById("export-images-label").style.display = "block";
+  document.getElementById("export-message").style.display = "block";
 }
 
 function exportImages(e) {

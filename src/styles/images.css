@@ -4,21 +4,37 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#import-container {
+#head-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #34495e;
+  color: #ecf0f1;
+  padding: 50px 0;
 }
 
-#import-container h1 {
-  font-size: 40px;
+#logo {
+  width: 300px;
+  margin-bottom: 40px;
+}
+
+#logo img {
+  width: 100%;
+}
+
+#head-section h1 {
+  font-size: 24px;
   margin: 0;
   margin-bottom: 50px;
+  text-align: center;
 }
 
 #button-container {
   display: flex;
+  justify-content: space-around;
+  width: 400px;
+  margin-bottom: 30px;
 }
 
 #import-images {
@@ -40,7 +56,6 @@ body {
 
 #export-images-label {
   background: #2980b9;
-  margin-left: 30px;
   display: none;
 }
 
@@ -48,22 +63,47 @@ body {
   display: none;
 }
 
+#export-message {
+  display: none;
+  margin: 0;
+}
+
 #images-container {
+  margin-bottom: 10px;
+}
+
+.image-section {
+  margin-bottom: 10px;
+}
+
+.image-section h3 {
+  margin: 30px 5%;
+  padding-left: 10px;
+  border-bottom: 1px solid #7f8c8d;
+  padding-bottom: 10px;
+}
+
+.image-section-list {
   padding: 20px;
-  margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
-#images-container > div {
+.image-section-list > div {
   flex: 0 0 23%;
   text-align: center;
   position: relative;
 }
 
-#images-container img {
+.image-section-list img {
   max-width: 100%;
+}
+
+#no-images {
+  text-align: center;
+  color: #7f8c8d;
+  margin-top: 50px;
 }
 
 .remove-image {
