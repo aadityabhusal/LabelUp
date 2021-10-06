@@ -24,8 +24,10 @@ document.getElementById("forward").addEventListener("click", function (e) {
 
 document.addEventListener("keydown", (e) => {
   if (e.keyCode === 32) {
-    e.preventDefault();
-    playPause(video, play);
+    if (e.target.tagName !== "INPUT") {
+      e.preventDefault();
+      playPause(video, play);
+    }
   }
 
   if (e.keyCode === 37) {

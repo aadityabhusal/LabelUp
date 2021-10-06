@@ -60,7 +60,7 @@ export class Label {
   }
 
   labelListeners = () => {
-    this.label.addEventListener("click", () => {
+    this.label.addEventListener("dblclick", () => {
       this.labelInput.focus();
     });
 
