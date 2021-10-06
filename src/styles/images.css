@@ -33,7 +33,7 @@ body {
 #button-container {
   display: flex;
   justify-content: space-around;
-  width: 400px;
+  width: 450px;
   margin-bottom: 30px;
 }
 

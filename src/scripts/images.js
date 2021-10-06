@@ -50,10 +50,10 @@ function displayImages(e) {
     });
     if (images.length)
       document.getElementById("no-images").style.display = "none";
+    document.getElementById("export-images-label").style.display = "block";
+    document.getElementById("export-message").style.display = "block";
   };
   reader.readAsText(file);
-  document.getElementById("export-images-label").style.display = "block";
-  document.getElementById("export-message").style.display = "block";
 }
 
 function exportImages(e) {
