@@ -17,6 +17,7 @@ body {
 #logo {
   width: 300px;
   margin-bottom: 40px;
+  text-align: center;
 }
 
 #logo img {
