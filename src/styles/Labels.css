@@ -14,29 +14,31 @@
 
 #labels-container {
   display: flex;
-  flex: 0 0 250px;
+  flex: 0 0 300px;
   flex-direction: column;
-  padding: 5px;
+  padding: 5px 0;
   border: 1px solid #bdc3c7;
 }
 
 #label-list-title {
   margin: 0;
   margin-bottom: 10px;
-  padding-bottom: 5px;
+  padding: 5px 0;
+  border-top: 1px solid #bdc3c7;
   border-bottom: 1px solid #bdc3c7;
   text-align: center;
 }
 
 #label-list {
   flex: 1;
-  padding-right: 5px;
+  padding: 5px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .label-box {
   display: flex;
-  flex-direction: column;
   position: relative;
 }
 .label-color-picker {
@@ -62,7 +64,7 @@
   font-size: 15px;
   margin-bottom: 8px;
   position: relative;
-  outline: 0;
+  width: 100%;
 }
 
 .closeIcon {
@@ -87,7 +89,8 @@
   cursor: pointer;
   outline: 0;
   padding: 10px 0;
-  margin-top: 10px;
+  margin: 10px;
+  margin-bottom: 0;
   background: #16a085;
   color: #fff;
   border: none;
@@ -103,7 +106,6 @@
   background: #2980b9;
   font-size: 14px;
   flex: 0 0 200px;
-  margin-right: 20px;
 }
 
 #export-images-btn {
@@ -124,7 +126,6 @@
   font-size: 14px;
   text-align: center;
   flex: 0 0 200px;
-  margin-right: 20px;
 }
 
 #add-label-btn:hover,

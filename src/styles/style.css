@@ -5,6 +5,19 @@ body {
   user-select: none;
 }
 
+#logo {
+  margin-bottom: 20px;
+}
+
+#editor-logo {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#editor-logo img {
+  width: 70%;
+}
+
 #container {
   display: none;
   flex-direction: column;
@@ -62,8 +75,9 @@ body {
 }
 
 #upload-container p {
-  font-size: 20px;
+  font-size: 22px;
   margin-bottom: 80px;
+  text-align: center;
 }
 
 #video-upload {
