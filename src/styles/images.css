@@ -29,6 +29,7 @@ body {
   margin: 0;
   margin-bottom: 50px;
   text-align: center;
+  padding: 0 1rem;
 }
 
 #button-container {
@@ -69,6 +70,8 @@ body {
 #export-message {
   display: none;
   margin: 0;
+  text-align: center;
+  padding: 0 1rem;
 }
 
 #images-container {
