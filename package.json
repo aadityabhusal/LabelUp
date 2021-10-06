@@ -2,7 +2,6 @@
   "name": "labelup",
   "version": "1.0.0",
   "description": "A video labeling/annotation tool for generating machine learning datasets",
-  "main": "./src/index.js",
   "source": "public/index.html",
   "scripts": {
     "dev": "parcel -p 3000",
