@@ -108,7 +108,8 @@ body {
   background-color: #16a085;
 }
 
-#video-upload-label:hover {
+#video-upload-label:hover,
+#import-images-page:hover {
   box-shadow: 2px 0px 10px 3px #bdc3c7; /*#555*/
   transform: scale(1.1);
 }
