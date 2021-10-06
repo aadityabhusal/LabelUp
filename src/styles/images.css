@@ -33,8 +33,7 @@ body {
 #button-container {
   display: flex;
   justify-content: space-around;
-  width: 450px;
-  margin-bottom: 30px;
+  flex-wrap: wrap;
 }
 
 #import-images {
@@ -52,6 +51,8 @@ body {
   transition: 0.3s ease all;
   font-size: 20px;
   font-weight: 600;
+  margin: 30px;
+  margin-top: 0;
 }
 
 #export-images-label {
