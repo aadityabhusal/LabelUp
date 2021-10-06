@@ -1,5 +1,5 @@
-let images = [];
-
+let labels = [];
+const imagesContainer = document.getElementById("images-container");
 document
   .getElementById("import-images")
   .addEventListener("change", displayImages);
@@ -8,21 +8,22 @@ document
   .addEventListener("click", exportImages);
 
 function displayImages(e) {
-  images = [];
+  labels = [];
+  imagesContainer.innerHTML = "";
   let file = e.target.files[0];
   let reader = new FileReader();
   reader.onload = (event) => {
-    let importedImages = JSON.parse(event.target.result);
-    images = importedImages;
-    importedImages.forEach((item, i) => {
+    let importedLabels = JSON.parse(event.target.result);
+    labels = importedLabels;
+    importedLabels.forEach((item, i) => {
       let imgSection = document.createElement("div");
       imgSection.classList.add("image-section");
       let imgSectionTitle = document.createElement("h3");
-      imgSectionTitle.innerHTML = "Title";
+      imgSectionTitle.innerHTML = item.info.name || "<i>No Name</i>";
       let imgSectionList = document.createElement("div");
       imgSectionList.classList.add("image-section-list");
 
-      Object.entries(item).forEach(([key, image]) => {
+      Object.entries(item.images).forEach(([key, image]) => {
         let imgBox = document.createElement("div");
         let img = document.createElement("img");
         let removeIcon = document.createElement("div");
@@ -33,9 +34,9 @@ function displayImages(e) {
         removeIcon.innerHTML = "&#x2716;";
         removeIcon.addEventListener("click", (e) => {
           e.target.parentElement.style.display = "none";
-          images.forEach((image, i) => {
-            if (i === e.target.dataset.item) {
-              delete image[e.target.dataset.timestamp];
+          labels.forEach((label, i) => {
+            if (i === Number(e.target.dataset.item)) {
+              delete label.images[e.target.dataset.timestamp];
             }
           });
         });
@@ -46,9 +47,9 @@ function displayImages(e) {
       });
       imgSection.appendChild(imgSectionTitle);
       imgSection.appendChild(imgSectionList);
-      document.getElementById("images-container").appendChild(imgSection);
+      imagesContainer.appendChild(imgSection);
     });
-    if (images.length)
+    if (labels.length)
       document.getElementById("no-images").style.display = "none";
     document.getElementById("export-images-label").style.display = "block";
     document.getElementById("export-message").style.display = "block";
@@ -58,7 +59,7 @@ function displayImages(e) {
 
 function exportImages(e) {
   const exportImagesBtn = document.getElementById("export-images");
-  let imagesDataJSON = JSON.stringify(images);
+  let imagesDataJSON = JSON.stringify(labels);
   let imagesDataUri =
     "data:application/json;charset=utf-8," + encodeURIComponent(imagesDataJSON);
   exportImagesBtn.setAttribute("href", imagesDataUri);

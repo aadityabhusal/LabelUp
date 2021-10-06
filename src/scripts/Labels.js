@@ -152,7 +152,12 @@ document
 
     let imagesData = [];
     for (let i = 0; i < labels.length; i++) {
-      imagesData[i] = await labels[i].cropImages();
+      let images = await labels[i].cropImages();
+      let { id, name, color } = labels[i].labelInfo;
+      imagesData[i] = {
+        info: { id, name, color },
+        images,
+      };
     }
     let imagesDataJSON = JSON.stringify(imagesData);
     let imagesDataUri =
