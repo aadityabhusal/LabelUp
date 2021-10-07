@@ -216,7 +216,7 @@ export class Label {
             .drawImage(this.video, x, y, w, h, 0, 0, w, h);
           this.imageList[t] = this.canvas.toDataURL("image/png");
           resolve();
-        }, 80);
+        }, 150);
       });
     }
     return this.imageList;

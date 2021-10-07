@@ -31,11 +31,17 @@ document.addEventListener("keydown", (e) => {
   }
 
   if (e.keyCode === 37) {
-    skipDuration(video, currentTime, "left");
+    if (e.target.tagName !== "INPUT") {
+      e.preventDefault();
+      skipDuration(video, currentTime, "left");
+    }
   }
 
   if (e.keyCode === 39) {
-    skipDuration(video, currentTime, "right");
+    if (e.target.tagName !== "INPUT") {
+      e.preventDefault();
+      skipDuration(video, currentTime, "right");
+    }
   }
 });
 
