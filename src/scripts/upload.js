@@ -9,11 +9,12 @@ function uploadVideo() {
   file.onload = () => {
     video.setAttribute("src", file.result);
     video.addEventListener("loadedmetadata", function (e) {
+      window.resolution = video.videoWidth * video.videoHeight;
+      if (window.resolution > 2073600) return;
       video.style.width = video.videoWidth + "px";
       video.style.height = video.videoHeight + "px";
       window.videoWidth = video.videoWidth;
       window.videoHeight = video.videoHeight;
-      window.resolution = video.videoWidth * video.videoHeight;
       document.getElementById("container").style.display = "flex";
       console.log(window.resolution);
       document.getElementById("upload-container").style.display = "none";
