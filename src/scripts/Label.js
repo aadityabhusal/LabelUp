@@ -25,6 +25,7 @@ export class Label {
       : [];
     this.timeStamps = data.timeStamps || {};
     this.imageList = {};
+    this.cropImageRate = this.getCropImageRate();
 
     this.color = data.color || this.generateRandomColor();
     this.createLabel(this.color);
@@ -216,9 +217,18 @@ export class Label {
             .drawImage(this.video, x, y, w, h, 0, 0, w, h);
           this.imageList[t] = this.canvas.toDataURL("image/png");
           resolve();
-        }, 150);
+        }, this.cropImageRate);
       });
     }
     return this.imageList;
+  };
+
+  getCropImageRate = () => {
+    let resolution = Number(window.resolution) || 921600;
+    let cropImageRate = 300; // 1080p Resolution
+    if (resolution <= 230400) cropImageRate = 130; // 360p Resolution
+    if (resolution <= 409920) cropImageRate = 150; // 480p Resolution
+    if (resolution <= 921600) cropImageRate = 200; // 720p Resolution
+    return cropImageRate;
   };
 }

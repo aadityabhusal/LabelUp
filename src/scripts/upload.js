@@ -13,7 +13,9 @@ function uploadVideo() {
       video.style.height = video.videoHeight + "px";
       window.videoWidth = video.videoWidth;
       window.videoHeight = video.videoHeight;
+      window.resolution = video.videoWidth * video.videoHeight;
       document.getElementById("container").style.display = "flex";
+      console.log(window.resolution);
       document.getElementById("upload-container").style.display = "none";
     });
   };
