@@ -125,11 +125,22 @@ body {
 }
 
 #upload-message {
-  margin: 0;
   margin-top: 20px;
+  margin-bottom: 0 !important;
   text-align: center;
   padding: 0 1rem;
   font-size: 16px !important;
+}
+
+#tutorial-link {
+  display: block;
+  color: #fff;
+  margin: 30px;
+  text-decoration: none;
+}
+
+#tutorial-link:hover {
+  text-decoration: underline;
 }
 
 #canvas {
