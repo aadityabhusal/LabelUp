@@ -1,5 +1,4 @@
 let labels = [];
-const imagesContainer = document.getElementById("images-container");
 document
   .getElementById("import-images")
   .addEventListener("change", displayImages);
@@ -9,6 +8,7 @@ document
 
 function displayImages(e) {
   labels = [];
+  const imagesContainer = document.getElementById("images-container");
   imagesContainer.innerHTML = "";
   let file = e.target.files[0];
   let reader = new FileReader();

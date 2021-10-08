@@ -146,6 +146,7 @@ document
   .getElementById("export-images-btn")
   .addEventListener("click", async () => {
     if (isButtonClicked) return;
+    video.pause();
     isButtonClicked = true;
     loadingMask.style.display = "flex";
     const exportImages = document.getElementById("export-images");
