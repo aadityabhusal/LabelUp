@@ -34,7 +34,17 @@ let wasPlaying = false;
 
 let isButtonClicked = false;
 
-document.addEventListener("mousedown", (e) => {
+document.addEventListener("mousedown", labelPressDown);
+document.addEventListener("touchstart", labelPressDown);
+
+document.addEventListener("mousemove", labelMove);
+document.addEventListener("touchmove", labelMove);
+
+document.addEventListener("mouseup", labelRelease);
+document.addEventListener("touchend", labelRelease);
+document.addEventListener("touchcancel", labelRelease);
+
+function labelPressDown(e) {
   if (e.target.classList.contains("label")) {
     targetLabel = getLabelFromId(e.target.id);
     targetLabelBox = targetLabel.label;
@@ -57,9 +67,9 @@ document.addEventListener("mousedown", (e) => {
   } else {
     return;
   }
-});
+}
 
-document.addEventListener("mousemove", (e) => {
+function labelMove(e) {
   if (targetLabelBox && !isResized) {
     targetLabelBox.style.left = e.clientX - xOffset + "px";
     targetLabelBox.style.top = e.clientY - yOffset + "px";
@@ -78,9 +88,9 @@ document.addEventListener("mousemove", (e) => {
       changeDuration.call(durationDiv, e, video);
     }
   }
-});
+}
 
-document.addEventListener("mouseup", () => {
+function labelRelease(e) {
   if (targetLabelBox) {
     targetLabel.dimension = {
       w: targetLabelBox.clientWidth / (window.scale || 1),
@@ -107,7 +117,7 @@ document.addEventListener("mouseup", () => {
     }
     isDurationClick = false;
   }
-});
+}
 
 /* 
   Importing and Exporting Data and Images Section
