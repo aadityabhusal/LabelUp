@@ -3,6 +3,7 @@ import { changeDuration } from "./utils.js";
 
 const durationDiv = document.getElementById("duration");
 const video = document.getElementById("video");
+const videoPlayer = document.getElementById("video-player");
 const loadingMask = document.getElementById("loading-mask");
 export let labels = [];
 
@@ -34,19 +35,47 @@ let wasPlaying = false;
 
 let isButtonClicked = false;
 
-document.addEventListener("mousedown", labelPressDown);
-document.addEventListener("touchstart", labelPressDown);
+document.addEventListener("mousedown", (e) => labelPressDown(e, e.target));
+document.addEventListener(
+  "touchstart",
+  (e) => {
+    let target = e.changedTouches[0].target;
+    target.classList.contains("label") && labelPressDown(e, target);
+  },
+  false
+);
 
-document.addEventListener("mousemove", labelMove);
-document.addEventListener("touchmove", labelMove);
+document.addEventListener("mousemove", (e) => labelMove(e, e.target));
+document.addEventListener(
+  "touchmove",
+  (e) => {
+    let target = e.changedTouches[0].target;
+    target.classList.contains("label") && labelMove(e, target);
+  },
+  false
+);
 
-document.addEventListener("mouseup", labelRelease);
-document.addEventListener("touchend", labelRelease);
-document.addEventListener("touchcancel", labelRelease);
+document.addEventListener("mouseup", (e) => labelRelease(e, e.target));
+document.addEventListener(
+  "touchend",
+  (e) => {
+    let target = e.changedTouches[0].target;
+    target.classList.contains("label") && labelRelease(e, target);
+  },
+  false
+);
+document.addEventListener(
+  "touchcancel",
+  (e) => {
+    let target = e.changedTouches[0].target;
+    target.classList.contains("label") && labelRelease(e, target);
+  },
+  false
+);
 
-function labelPressDown(e) {
-  if (e.target.classList.contains("label")) {
-    targetLabel = getLabelFromId(e.target.id);
+function labelPressDown(e, target) {
+  if (target.classList.contains("label")) {
+    targetLabel = getLabelFromId(target.id);
     targetLabelBox = targetLabel.label;
     video.pause();
     if (
@@ -55,10 +84,12 @@ function labelPressDown(e) {
     ) {
       xOffset = e.clientX - targetLabelBox.offsetLeft;
       yOffset = e.clientY - targetLabelBox.offsetTop;
+      target.style.touchAction = "none";
+      videoPlayer.style.touchAction = "none";
     } else {
       isResized = true;
     }
-  } else if (durationDiv.contains(e.target)) {
+  } else if (durationDiv.contains(target)) {
     isDurationClick = true;
     if (!video.paused) {
       wasPlaying = true;
@@ -69,7 +100,7 @@ function labelPressDown(e) {
   }
 }
 
-function labelMove(e) {
+function labelMove(e, target) {
   if (targetLabelBox && !isResized) {
     targetLabelBox.style.left = e.clientX - xOffset + "px";
     targetLabelBox.style.top = e.clientY - yOffset + "px";
@@ -82,7 +113,7 @@ function labelMove(e) {
       targetLabelBox.style.left = parentRect.width - targetRect.width + "px";
     if (targetRect.bottom > parentRect.bottom)
       targetLabelBox.style.top = parentRect.height - targetRect.height + "px";
-  } else if (durationDiv.contains(e.target)) {
+  } else if (durationDiv.contains(target)) {
     document.getElementById("duration-line").style.left = e.clientX + "px";
     if (isDurationClick) {
       changeDuration.call(durationDiv, e, video);
@@ -90,7 +121,7 @@ function labelMove(e) {
   }
 }
 
-function labelRelease(e) {
+function labelRelease(e, target) {
   if (targetLabelBox) {
     targetLabel.dimension = {
       w: targetLabelBox.clientWidth / (window.scale || 1),
@@ -107,7 +138,8 @@ function labelRelease(e) {
       dimension: targetLabel.dimension,
     };
     targetLabel.timeStamps = targetLabel.addTimeStamps();
-
+    target.style.touchAction = "auto";
+    videoPlayer.style.touchAction = "auto";
     targetLabelBox = null;
     isResized = false;
   } else if (isDurationClick) {
