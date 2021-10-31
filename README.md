@@ -1,4 +1,4 @@
-## <p align="center"><img src="public\assets\logo.png" alt="GrapesJS" align="center"/></p><br>
+## <p align="center"><img src="public\assets\logo.png" alt="LabelUp" align="center"/></p><br>
 
 [LabelUp](https://labelup.netlify.app/) is a video annotator for labeling objects in a video and generating machine learning dataset. It is a fully front-end applicatipn created using vanilla JavaScript.
 
@@ -24,11 +24,11 @@
 
 ### Video Labeling Environment
 
-## <p align="center"><img src="public\assets\screenshot.png" alt="GrapesJS" align="center"/></p><br>
+## <p align="center"><img src="public\assets\screenshot.png" alt="LabelUp" align="center"/></p><br>
 
 ### Images Display and Filter Page
 
-## <p align="center"><img src="public\assets\screenshot2.png" alt="GrapesJS" align="center"/></p><br>
+## <p align="center"><img src="public\assets\screenshot2.png" alt="LabelUp" align="center"/></p><br>
 
 ## License
 
