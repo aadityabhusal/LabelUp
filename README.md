@@ -1,6 +1,6 @@
 ## <p align="center"><img src="public\assets\logo.png" alt="LabelUp" align="center"/></p><br>
 
-[LabelUp](https://labelup.netlify.app/) is a video annotator for labeling objects in a video and generating machine learning dataset. It is a fully front-end applicatipn created using vanilla JavaScript.
+[LabelUp](https://labelup.netlify.app/) is a video annotator for labeling objects in videos and generating machine learning dataset. It is a fully front-end application created using vanilla JavaScript. For tracking moving objects in videos, it uses motion interpolation between two label checkpoints.
 
 ---
 
@@ -33,4 +33,4 @@
 ## License
 
 Copyright © 2021 [Aaditya Bhusal](https://github.com/aadityabhusal).<br />
-This project is [GNU GPLv3](https://github.com/aadityabhusal/LabelUp/blob/main/LICENSE) licensed.
+This project is licensed under [GNU GPLv3](https://github.com/aadityabhusal/LabelUp/blob/main/LICENSE).
