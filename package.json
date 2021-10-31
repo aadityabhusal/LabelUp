@@ -1,7 +1,7 @@
 {
   "name": "labelup",
   "version": "1.0.0",
-  "description": "A video labeling/annotation tool for generating machine learning datasets",
+  "description": "A video annotator for generating machine learning datasets",
   "source": "public/index.html",
   "scripts": {
     "dev": "rm -rf ./dist && rm -rf ./.parcel-cache && parcel -p 3000",
