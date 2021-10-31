@@ -83,7 +83,7 @@ body {
 
 #upload-container p {
   font-size: 22px;
-  margin-bottom: 80px;
+  margin-bottom: 0;
   text-align: center;
 }
 
@@ -125,21 +125,35 @@ body {
 }
 
 #upload-message {
-  margin-top: 20px;
+  margin: 20px 0;
   margin-bottom: 0 !important;
   text-align: center;
   padding: 0 1rem;
   font-size: 16px !important;
 }
 
-#tutorial-link {
-  display: block;
-  color: #fff;
-  margin: 30px;
-  text-decoration: none;
+#links {
+  margin: 30px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-#tutorial-link:hover {
+#links a {
+  margin: 10px 20px;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+}
+
+#links img {
+  height: 18px;
+  width: 18px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+#links a:hover {
   text-decoration: underline;
 }
 
